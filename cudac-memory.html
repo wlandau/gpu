@@ -1,0 +1,34 @@
+---
+layout: default
+current: "talks"
+title: "CUDA C: performance measurement and types of memory"
+root: "/gpu/"
+---
+
+<h2>CUDA C: performance measurement and types of memory</h2>
+
+Day: Monday, October 14<br/>
+Time: 2:10 PM - 3:00 PM<br/>
+Place: <a href="http://www.fpm.iastate.edu/maps/buildings/building.asp?id=119">Snedecor Hall 2113</a><br/><br/>
+
+Viewers will first learn how record the runtime of a CUDA C 
+kernel. Next, they will learn the differences between local, shared, and 
+global device memory, along with how to utilize each type of storage in
+ CUDA C. I will demonstrate the usage of these types of memory with a 
+ CUDA C implementation of the dot product.
+<br/><br/>
+
+<h2>Materials</h2>
+<a href="lectures/cudac-memory/cudac-memory.pdf" target="_blank">Slides</a><br/>
+<a href="video/cudac-memory.html" target="_blank">Video</a><br/><br/>
+
+<h2>Example Code</h2>
+<div class="colwid2">
+  <a href="Code/CUDA_C/time/time.cu">time.cu</a><br/>
+  <a href="Code/CUDA_C/pairwise_sum_timed/pairwise_sum_timed.cu">pairwise_sum_timed.cu</a><br/>
+  <a href="Code/CUDA_C/dot_product/dot_product.cu">dot_product.cu</a>
+</div>
+  <a href="Code/CUDA_C/time/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/pairwise_sum_timed/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/dot_product/Makefile">Makefile</a>
+  

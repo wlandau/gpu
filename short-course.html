@@ -1,0 +1,44 @@
+---
+layout: default
+current: "talks"
+title: "A stand-alone short course in GPU computing for statisticians"
+root: "/gpu/"
+---
+
+<h2>A stand-alone short course in GPU computing for statisticians</h2>
+
+Day: Monday, September 9<br/>
+Time: 2:10 PM - 4:00 PM<br/>
+Place: <a href="http://www.fpm.iastate.edu/maps/buildings/building.asp?id=119">Snedecor Hall 2113</a><br/><br/>
+
+This is a stand-alone, 2-hour crash course in GPU computing for
+statisticians. It is meant to be an alternative to the 11 main talks
+listed at <a href="http://will-landau.com/gpu/talks.html">http://will-landau.com/gpu/talks.html</a>.
+Although intended mainly for faculty, this talk welcomes everyone. <br/><br/>
+
+Viewers will be introduced to GPUs in general,
+the Iowa State Statistics Department's GPU clusters, 
+parallelizing statistical algorithms in CUDA C, and
+ NVIDIA's GPU-accelerated CUDA C libraries.
+ Examples include pairwise summation, K-means, Markov chain
+ Monte Carlo, and ordinary least squares. These examples 
+ will showcase some best practices in CUDA C
+programming, including error checking with Valgrind and
+CUDA MEMCHECK.
+<br/><br/>
+
+<h2>Materials</h2>
+<a href="lectures/short-course/short-course.pdf" target="_blank">Slides</a><br/>
+<a href="video/short-course.html" target="_blank">Video</a><br/><br/>
+
+<h2>Example Code</h2>
+<div class="colwid2">
+<a href="Code/CUDA_C/vectorsums/vectorsums.cu">vectorsums.cu</a><br/>
+<a href="Code/CUDA_C/pairwise_sum/pairwise_sum.cu">pairwise_sum.cu</a><br/>
+<a href="Code/CUDA_C/kmeans/kmeans.zip">kmeans.zip</a><br/>
+<a href="Code/CUDA_C/mcmc/mcmc.zip">mcmc.zip</a><br/>
+<a href="Code/CUDA_C/CULA/ols/ols.cu">ols.cu</a>
+</div>
+  <a href="Code/CUDA_C/vectorsums/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/pariwise_sum/Makefile">Makefile</a><br/><br/>
+  <a href="Code/CUDA_C/CULA/ols/Makefile">Makefile</a><br/>

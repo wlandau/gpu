@@ -1,0 +1,32 @@
+---
+layout: default
+current: "talks"
+title: "CUDA C: K-means and MCMC"
+root: "/gpu/"
+---
+
+<h2>CUDA C: K-means and MCMC</h2>
+
+Day: Monday, October 7<br/>
+Time: 2:10 PM - 3:00 PM<br/>
+Place: <a href="http://www.fpm.iastate.edu/maps/buildings/building.asp?id=119">Snedecor Hall 2113</a><br/><br/>
+
+At this point in the series, we're ready to parallelize some simple but interesting 
+statistical algorithms. The first example in this talk is classic Lloyd's K-means in 
+two dimensions, and the second is a Markov chain Monte Carlo from an example from 
+Dr. Jarad Niemi's STAT 544 class from the spring semester of 2013. The MCMC will 
+also be a preview of topics to come in future lectures, such as shared memory, the 
+CURAND library, and the Thrust library. More importantly, both examples will showcase 
+some best practices in CUDA C programming, including error checking with Valgrind and 
+CUDA MEMCHECK. 
+<br/><br/>
+
+<h2>Materials</h2>
+<a href="lectures/cudac-examples/cudac-examples.pdf" target="_blank">Slides</a><br/>
+<a href="video/cudac-examples.html" target="_blank">Video</a><br/><br/>
+
+<h2>Example Code</h2>
+<div class="colwid2">
+<a href="Code/CUDA_C/kmeans/kmeans.zip">kmeans.zip</a><br/>
+<a href="Code/CUDA_C/mcmc/mcmc.zip">mcmc.zip</a>
+</div><br/><br/>

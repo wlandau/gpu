@@ -1,0 +1,165 @@
+<input>
+# Number of models for which details are described in this input file
+
+<modelnumber> 3 </modelnumber>
+
+# Restart from previous (pickled) population?
+<restart> False </restart>
+
+# Automatic epsilon schedule. Provide a vector of final epsilons and the alpha (defaults to 0.9)
+<autoepsilon> 
+<finalepsilon> 1 </finalepsilon>
+<alpha> 0.1 </alpha>
+</autoepsilon>
+
+# Particles
+<particles> 1000 </particles>
+
+# Beta is the number of times to simulate each sampled parameter set.
+# This is only ﬁapplicable for models simulated using SDE.
+
+<beta> 1 </beta>
+
+# Internal timestep for solver.
+# Make this small for a stiff model.
+
+<dt> 1 </dt>
+
+# rtol and atol can be specified here.
+# If the model is stiff then setting these to small
+# might help the simulation to run.
+# Only applicable for models simulated using ODE.
+
+# <rtol> </rtol>
+# <atol> </atol>
+
+#User-supplied data.
+
+<data>
+# times: For abc-SMC, times must be a whitespace delimited list starting with 0.
+# For simulation only the first and last timepoints are used.
+# To make a synthetic data set give a whitespace delimited list of timepoints at which data points are required.
+
+<times> 0.0 0.6 1.0 2.0 3.0 4.0 5.0 6.0 7.0 8.0 9.0 10.0 11.0 </times>
+
+# variables: For abc-SMC, whitespace delimited lists of concentrations (ODE or SDE) or molecule numbers (Gillespie).
+# Denote your data as variable1, variable2, ..., variableN.
+# For simulation or synthetic data sets these data are ignored.
+# See fitting instruction below if the dimensionality of your data sets differ from the dimensionality of your model.
+
+<variables>
+ <v1> 20.0 0.12313 0.12102 0.09898 0.37887 1.00661 1.20135 1.46433 1.37789 1.57073 1.46470 1.24719 1.56065  </v1>
+ <v2> 10.0 13.16813 7.17251 2.36466 0.92019 0.61958 0.17449 0.28039 0.09850 0.03343 0.28544 0.10138 0.21671 </v2>
+ <v3> 0.0 9.42344 11.18957 10.03650 6.87117 4.44955 3.01271 1.76431 1.28868 0.81813 0.52111 0.22746 0.19627 </v3>
+</variables>
+</data>
+
+<models>
+
+<model1>
+<name> SIRmodel1 </name>
+<source> SIRModel1.xml </source>
+
+# type: the method used to simulate your model. ODE, SDE or Gillespie.
+<type> ODE </type>
+
+# Fitting information. If fit is None, all species in the model are fitted to the data in the order they are listed in the model.
+# Otherwise, give a whitespace delimited list of fitting instrictions the same length as the dimensions of your data.
+# Use speciesN to denote the Nth species in your model. Simple arithmatic operations can be performed on the species from your model.
+# For example, to fit the sum of the first two species in your model to your first variable, write fit: species1+species2
+<fit> None </fit>
+
+# Priors:
+# one of 
+#	constant, value
+#	uniform, lower, upper
+#	gaussian, mean, variance
+
+<parameters>
+<parameter1> constant 1.0 </parameter1>
+<parameter2> uniform 0 5  </parameter2>
+<parameter3> uniform 0 5  </parameter3>
+<parameter4> uniform 0 5  </parameter4>
+<parameter5> uniform 0 5  </parameter5>
+</parameters>
+
+<initial>
+<ic1> constant 20.0 </ic1>
+<ic2> constant 10.0 </ic2>
+<ic3> constant 0.0  </ic3>
+</initial>
+</model1>
+
+<model2>
+<name> SIRmodel2 </name>
+<source> SIRModel2.xml </source>
+
+# type: the method used to simulate your model. ODE, SDE or Gillespie.
+<type> ODE </type>
+
+# Fitting information. If fit is None, all species in the model are fitted to the data in the order they are listed in the model.
+# Otherwise, give a whitespace delimited list of fitting instrictions the same length as the dimensions of your data.
+# Use speciesN to denote the Nth species in your model. Simple arithmatic operations can be performed on the species from your model.
+# For example, to fit the sum of the first two species in your model to your first variable, write fit: species1+species2
+<fit> species1 species3 species4 </fit>
+
+# Priors:
+# one of 
+#	constant, value
+#	uniform, lower, upper
+#	gaussian, mean, variance
+
+<parameters>
+<parameter1> constant 1.0 </parameter1>
+<parameter2> uniform 0 5  </parameter2>
+<parameter3> uniform 0 5  </parameter3>
+<parameter4> uniform 0 5  </parameter4>
+<parameter5> uniform 0 5  </parameter5>
+<parameter6> uniform 0 10 </parameter6>
+</parameters>
+
+<initial>
+<ic1> constant 20.0 </ic1>
+<ic2> constant 0.0  </ic2>
+<ic3> constant 10.0 </ic3>
+<ic4> constant 0.0  </ic4>
+</initial>
+</model2>
+
+<model3>
+<name> SIRmodel3 </name>
+<source> SIRModel3.xml </source>
+
+# type: the method used to simulate your model. ODE, SDE or Gillespie.
+<type> ODE </type>
+
+# Fitting information. If fit is None, all species in the model are fitted to the data in the order they are listed in the model.
+# Otherwise, give a whitespace delimited list of fitting instrictions the same length as the dimensions of your data.
+# Use speciesN to denote the Nth species in your model. Simple arithmatic operations can be performed on the species from your model.
+# For example, to fit the sum of the first two species in your model to your first variable, write fit: species1+species2
+<fit> None </fit>
+
+# Priors:
+# one of 
+#	constant, value
+#	uniform, lower, upper
+#	gaussian, mean, variance
+
+<parameters>
+<parameter1> constant 1.0 </parameter1>
+<parameter2> uniform 0 5  </parameter2>
+<parameter3> uniform 0 5  </parameter3>
+<parameter4> uniform 0 5  </parameter4>
+<parameter5> uniform 0 5  </parameter5>
+<parameter6> uniform 0 10 </parameter6>
+</parameters>
+
+<initial>
+<ic1> constant 20.0 </ic1>
+<ic2> constant 10.0 </ic2>
+<ic3> constant 0.0  </ic3>
+</initial>
+</model3>
+
+</models>
+</input>

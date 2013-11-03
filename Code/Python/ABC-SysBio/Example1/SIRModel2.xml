@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level2" level="2" version="1">
+  <model id="SIRModel3" name="SIR Model 3">
+    <listOfCompartments>
+      <compartment id="World" size="1"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="S" compartment="World" initialConcentration="20"/>
+      <species id="L" compartment="World" initialConcentration="0"/>
+      <species id="I" compartment="World" initialConcentration="10"/>
+      <species id="R" compartment="World" initialConcentration="0"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="death" value="0.01"/>
+      <parameter id="recovery" value="0.01"/>
+      <parameter id="infection" value="0.01"/>
+      <parameter id="birth" value="1"/>
+      <parameter id="transition" value="0.1"/>
+    </listOfParameters>
+    <listOfReactions>
+      <reaction id="Birth" reversible="false">
+        <listOfProducts>
+          <speciesReference species="S"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> World </ci>
+              <ci> birth </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="susDeath" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> World </ci>
+              <ci> S </ci>
+              <ci> death </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="latentDeath" reversible="false">
+        <listOfReactants>
+          <speciesReference species="L"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> World </ci>
+              <ci> L </ci>
+              <ci> death </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="infectedDeath" reversible="false">
+        <listOfReactants>
+          <speciesReference species="I"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> World </ci>
+              <ci> I </ci>
+              <ci> death </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="recoveredDeath" reversible="false">
+        <listOfReactants>
+          <speciesReference species="R"/>
+        </listOfReactants>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> World </ci>
+              <ci> R </ci>
+              <ci> death </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="Infection" reversible="false">
+        <listOfReactants>
+          <speciesReference species="S"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="L"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> World </ci>
+              <ci> infection </ci>
+              <ci> S </ci>
+              <ci> I </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="transitionFromLatencyToInfective" reversible="false">
+        <listOfReactants>
+          <speciesReference species="L"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="I"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> World </ci>
+              <ci> transition </ci>
+              <ci> L </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="Recovery" reversible="false">
+        <listOfReactants>
+          <speciesReference species="I"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="R"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <times/>
+              <ci> World </ci>
+              <ci> recovery </ci>
+              <ci> I </ci>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

@@ -1,0 +1,51 @@
+---
+layout: default
+current: "talks"
+title: "The CUBLAS and CULA libraries"
+root: "/gpu/"
+---
+
+<h2>The CUBLAS and CULA libraries</h2>
+
+Day: Monday, October 28<br/>
+Time: 2:10 PM - 3:00 PM<br/>
+Place: <a href="http://www.fpm.iastate.edu/maps/buildings/building.asp?id=119">Snedecor Hall 2113</a><br/><br/>
+
+The CUBLAS library is a CUDA implementation of the Basic Linear 
+Algebra Subroutines (BLAS) library, a standard Fortran/C API for matrix algebra. 
+CULA, the CUDA C implementation of LAPACK, is built on top of CUBLAS. 
+CULA supports more advanced linear algebra calculations than CUBLAS, 
+such as the LU, QR, RQ, QL, SVD, 
+and Cholesky factorizations, solving systems of linear equations 
+for general m by n matrices, ordinary least squares, and 
+eigenvalue problems. In a nutshell, CUBLAS and CULA  
+accelerate common linear algebra routines while taking care of
+all the GPU parallelism under the hood.
+This lecture will overview and demonstrate the usage of both CUBLAS and CULA.
+<br/><br/>
+
+<h2>Materials</h2>
+<a href="lectures/cublas-cula/cublas-cula.pdf" target="_blank">Slides</a><br/>
+<a href="video/cublas-cula.html" target="_blank">Video</a><br/><br/>
+
+<h2>Example Code</h2>
+<div class="colwid2">
+  <a href="Code/CUDA_C/CUBLAS/Example2/Example2.cpp">Example2.cpp</a><br/>
+  <a href="Code/CUDA_C/CULA/ols/ols.cu">ols.cu</a><br/>  
+  <a href="Code/CUDA_C/CULA/mwe/mwe.cu">mwe.cu</a><br/>   
+  <a href="Code/CUDA_C/CUBLAS/simpleCUBLAS/simpleCUBLAS.cpp">simpleCUBLAS.cu</a><br/>  
+  <a href="Code/CUDA_C/CULA/Argument_Errors/ae.cu">ae.cu</a><br/>  
+  <a href="Code/CUDA_C/CULA/Data_Errors/de.cu">de.cu</a><br/>    
+  <a href="Code/CUDA_C/CULA/deviceInterface/deviceInterface.c">deviceInterface.cu</a><br/>    
+  <a href="Code/CUDA_C/CULA/Library_Link_Check/ll.cu">ll.cu</a><br/>    
+  <a href="Code/CUDA_C/CULA/systemSolve/systemSolve.c">systemSolve.cu</a>    
+</div>
+  <a href="Code/CUDA_C/CUBLAS/Example2/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/CULA/ols/Makefile">Makefile</a><br/>  
+  <a href="Code/CUDA_C/CULA/mwe/Makefile">Makefile</a><br/>  
+  <a href="Code/CUDA_C/CUBLAS/simpleCUBLAS/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/CULA/Argument_Errors/Makefile">Makefile</a><br/>  
+  <a href="Code/CUDA_C/CULA/Data_Errors/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/CULA/deviceInterface/Makefile">Makefile</a><br/>    
+  <a href="Code/CUDA_C/CULA/Library_Link_Check/Makefile">Makefile</a><br/>    
+  <a href="Code/CUDA_C/CULA/systemSolve/Makefile">Makefile</a>

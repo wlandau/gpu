@@ -1,0 +1,11 @@
+*.DS_STORE
+*.blg
+*.log
+*.out
+*.bbl
+*.nav
+*.snm
+*.aux
+*.vrb
+*.toc
+*.synctex.gz

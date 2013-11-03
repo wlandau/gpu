@@ -1,0 +1,644 @@
+\documentclass[handout]{beamer}
+\usetheme{Marburg}
+\useoutertheme{infolines}
+\newcommand{\answers}{1}
+
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{natbib}
+\usepackage{pgffor}
+\usepackage{url}
+
+\providecommand{\all}{\ \forall \ }
+\providecommand{\bs}{\backslash}
+\providecommand{\e}{\varepsilon}
+\providecommand{\E}{\ \exists \ }
+\providecommand{\lm}[2]{\lim_{#1 \rightarrow #2}}
+\providecommand{\m}[1]{\mathbb{#1}}
+\providecommand{\nv}{{}^{-1}}
+\providecommand{\ov}[1]{\overline{#1}}
+\providecommand{\p}{\newpage}
+\providecommand{\q}{$\quad$ \newline}
+\providecommand{\rt}{\rightarrow}
+\providecommand{\Rt}{\Rightarrow}
+\providecommand{\vc}[1]{\boldsymbol{#1}}
+\providecommand{\wh}[1]{\widehat{#1}}
+
+\hypersetup{colorlinks,linkcolor=,urlcolor=blue}
+\numberwithin{equation}{section}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  language=C,                % the language of the code
+  basicstyle= \footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,
+  numberfirstline=true,
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=lrb,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text 
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=t,                   % sets the caption-position 
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  %title=\lstname,                   % show the filename of files included with \lstinputlisting;
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{gray},       % comment style
+  stringstyle=\color{dkgreen},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*, ...},               % if you want to add more keywords to the set
+  xleftmargin=0.053in, % left horizontal offset of caption box
+  xrightmargin=-.03in % right horizontal offset of caption box
+}
+
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-0.05in}}
+\captionsetup[lstlisting]{format = listing, labelfont = white, textfont = white}
+%For caption-free listings, comment out the 3 lines above and uncomment the 2 lines below.
+% \captionsetup{labelformat = empty, labelsep = none}
+ %\lstset{frame = single}
+
+\title{Pointers and dynamic allocation in C}
+\author{Will Landau}
+\date{\today}
+\institute{Iowa State University}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+ \end{frame}
+ 
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame} 
+ 
+ \AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
+\section{Computer memory}
+
+\begin{frame}
+\frametitle{Computer memory}
+\begin{itemize}
+\item Fundamentally, all data is encoded in \emph{byte code}, strings of ones and zeros.
+
+\begin{align*}
+0100101100101100101\cdots
+\end{align*}
+
+\pause \item {\bf Bit}: a 1 or 0 in byte code.
+\pause \item {\bf Byte}: a string of 8 bits. For example, 00110100.
+\pause \item {\bf Word}: 
+\begin{itemize}
+\item a natural unit of data, the length of which depends on the processor.
+\pause \item On ``32-bit architectures", a word is a string of 32 bits (4 bytes).
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Compute memory}
+
+\begin{itemize}
+\item Computer memory is a linear array of bytes. Each byte has a word-sized index called an \emph{address}, or \emph{pointer}.
+\end{itemize}
+
+\pause \begin{center}
+\begin{tabular}{c|c|c}
+Address & Stored Value & Variable Name  \\ \hline 
+24399440  & 3  & a \\ 
+24399441  & & \\ 
+24399442  &  &\\
+24399443  &  & \\ \hline
+24399444  &  6.43451 & b\\ 
+24399445  & & \\ 
+24399446  &  &\\ 
+24399447  & & \\ \hline
+$\vdots$ & $\vdots$
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+\pause \item Note: we use the address, 24399440 (not 24399441 or 24399442) to refer to the storage space of variable {\tt a}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Computer memory}
+\begin{itemize}
+\item I condense the previous table and write:
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{c|c|c}
+Address & Stored Value & Variable Name  \\ \hline 
+24399440  & 3  & a \\ \hline
+24399444  &  6.43451 & b \\ \hline
+$\vdots$ & $\vdots$
+\end{tabular}
+\end{center}
+
+
+\begin{itemize}
+\pause \item We say that:
+\begin{itemize}
+\pause \item 24399440 is the address of variable {\tt a}.
+\pause \item 3 is the stored value at the address, 24399440.
+\pause \item {\tt a} is the variable pointed to by 24399440.
+\pause \item 3 is the value pointed to by 24399440. 
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+\section{Pointers}
+
+\begin{frame}
+\frametitle{Declaring pointer variables}
+
+\begin{itemize}
+\item Examples:
+\begin{itemize}
+\pause \item Write {\tt int *pa;} to declare an int pointer variable: a variable whose value is the address of an integer.
+\pause \item Write {\tt float *pa;} to declare a float pointer variable: a variable whose value is the address of a float.
+\pause \item Write {\tt double *pa;} to declare a double pointer variable: a variable whose value is the address of a double.
+\end{itemize}
+\pause \item The type of a pointer variable depends on the data type pointed to because: 
+\begin{itemize}
+\pause \item Different data types take up different amounts of memory.
+\pause \item The computer needs to know how to interpret the bytes of memory stored. Ints and floats, for example, are encoded differently.
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Example}
+
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ex0.c]{../../Code/C/pointers/ex0.c}
+
+\lstset{ title=output}
+\pause \begin{lstlisting}
+> gcc ex0.c -o ex0
+> ./ex0
+a = 17
+a = 0.000000
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile] \small
+
+\lstset{ title=output, basicstyle=\footnotesize}
+
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ex1.c]{../../Code/C/pointers/ex1.c}
+
+\pause \begin{lstlisting}
+> gcc ex1.c -o ex1
+> ./ex1
+a = 0
+&a = 1355533180
+\end{lstlisting}
+
+
+\pause \begin{center}
+\begin{tabular}{c|c|c} \scriptsize
+Variable & Address & Stored value \\ \hline
+a &1355533180 & 3
+\end{tabular}
+\end{center}
+\end{frame}
+
+\lstset{ title=output}
+
+\begin{frame}
+\begin{itemize}
+\item Let {\tt a} be an int and {\tt pa} be a pointer to an int. Then:
+\begin{itemize} \small
+\pause \item {\tt \&a} returns the address of {\tt a} (referencing). 
+\pause \item {\tt *pa} returns the value pointed to by {\tt a} (dereferencing).
+\end{itemize}
+\end{itemize}
+
+\pause \lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ex2.c]{../../Code/C/pointers/ex2.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+> gcc ex2.c -o ex2
+> ./ex2
+a=1
+&a = 1420507900 
+?pa = 1
+pa = 1420507900
+&pa = 1420507888
+\end{lstlisting}
+
+\begin{center}
+\pause \begin{tabular}{c|c|c}
+Variable & Address & Stored value \\ \hline
+a & 1420507900 & 1 \\ \hline
+pa & 1420507888 & 1420507900
+\end{tabular}
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\pause \lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ex3.c]{../../Code/C/pointers/ex3.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{lstlisting}
+> gcc ex3.c ?o ex3 
+> ./ex3
+a=0
+&a = 1537735420 b=1
+&b = 1537735416 ?pa = 1
+pa = 1537735416
+&pa = 1537735408
+\end{lstlisting}
+
+\begin{center}
+\pause \begin{tabular}{c|c|c}
+Variable & Address & Stored value \\ \hline
+a & 1537735420 & 0 \\ \hline
+b & 1537735416 & 1 \\ \hline
+pa & 1537735408 & 1537735416
+\end{tabular}
+\end{center}
+\end{frame}
+
+\section{Passing arguments by value and by reference}
+
+
+\begin{frame}
+\frametitle{Passing by value}
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ex4.c]{../../Code/C/pointers/ex4.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Passing by value}
+
+\begin{lstlisting}
+> gcc ex4.c -o ex4
+> ./ex4
+a = 0
+\end{lstlisting}
+
+\begin{itemize}
+\pause \item {\tt a } was passed to {\tt fun()} by \emph{value}
+\pause \item {\tt fun()} received a local copy of {\tt a} and then lost it when the function call terminated.
+\pause \item The copy of {\tt a} in {\tt int main()} remained unchanged.
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+\frametitle{Passing by reference}
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ex5.c]{../../Code/C/pointers/ex5.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Passing by reference}
+
+\begin{lstlisting}
+> gcc ex5.c -o ex5
+> ./ex5
+a = 1
+\end{lstlisting}
+
+\begin{itemize}
+\pause \item {\tt a } was passed to {\tt fun()} by \emph{reference}
+\pause \item {\tt fun()} received a local copy of a \emph{pointer} to {\tt a} in {\tt int main()}.
+\pause \item When {\tt fun()} terminated, it lost its copy of the address of {\tt a}, but it did not have an actual copy of {\tt a} to lose.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ex6.c]{../../Code/C/pointers/ex6.c}
+\end{frame}
+
+\begin{frame}[fragile]
+
+\begin{lstlisting}
+> gcc ex6.c -o ex6
+> ./ex6
+a = 0
+*pa = 1
+\end{lstlisting}
+
+\begin{itemize}
+\pause \item {\tt pa} id not contain the address of {\tt a}, so {\tt a} was not passed at all.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ex7.c]{../../Code/C/pointers/ex7.c}
+\end{frame}
+
+\begin{frame}[fragile]
+
+\begin{lstlisting}
+> gcc ex7.c -o ex7
+> ./ex7
+a = 1
+*pa = 1
+\end{lstlisting}
+
+\begin{itemize}
+\pause \item Since {\tt pa} points to {\tt a} and {\tt pa} was passed by value, {\tt a} was passed by reference.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Caution}
+\begin{itemize}
+\item Assign values to pointers before dereferencing them.
+\end{itemize}
+
+\pause \lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ex7.c]{../../Code/C/pointers/caution1.c}
+\pause 
+\begin{lstlisting}
+> gcc caution1 . c ?o caution1
+> ./caution1
+Bus error: 10
+\end{lstlisting}
+
+\begin{itemize}
+\pause \item The value of {\tt a} is some garbage number that isn't a real address! It points to nowhere!
+\end{itemize}
+\end{frame}
+
+
+\section{Arrays}
+
+
+\begin{frame}[fragile]
+\frametitle{Arrays}
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ar1.c]{../../Code/C/pointers/ar1.c}
+
+\pause \begin{lstlisting}
+> gcc ar1.c -o ar1 
+> ./ar1
+1
+23
+17
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Arrays}
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ar2.c]{../../Code/C/pointers/ar2.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Arrays}
+\begin{lstlisting}
+> gcc ar2.c -o ar2
+> ./ar2
+9
+17
+25
+7
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Arrays}
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/ar3.c, basicstyle=\tiny]{../../Code/C/pointers/ar3.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Arrays}
+\begin{lstlisting}
+> gcc ar3.c -o ar3
+> ./ar3
+9
+17
+25
+7
+1518070576
+\end{lstlisting}
+
+\small
+\begin{itemize}
+\pause \item {\tt pa} is actually pointer to the first element of the array.
+\end{itemize}
+
+\begin{center}
+\pause \begin{tabular}{l|c|c}
+Variable name(s) & Address & Stored value \\ \hline
+pa & & \\ \hline
+pa[0], *pa & 1518070576 & 9 \\ \hline
+pa[1], *(pa + 1) & 1518070580 & 17 \\ \hline
+pa[2], *(pa + 2) &1518070584 & 25 \\ \hline
+pa[3], *(pa + 3) & 1518070588 & 7
+\end{tabular}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Caution} \small
+
+\begin{itemize}
+\item Every (statically allocated) array has a set length. Do not dereference beyond this length. 
+\pause \item C lets you, but you risk a:
+\pause \item bus error: dereferencing an address that points to nothing.
+\pause \item segmentation fault: dereferencing an address that exists but that the program does not have permission to dereference (out of bounds).
+\end{itemize}
+
+\pause \lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/caution2.c, basicstyle=\tiny]{../../Code/C/pointers/caution2.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Caution} 
+\begin{lstlisting}
+> gcc caution2.c -o caution2
+> ./caution2
+Segmentation fault: 11
+\end{lstlisting}
+\end{frame}
+
+\section{Dynamic memory allocation}
+
+\begin{frame}
+\frametitle{Dynamic memory allocation}
+
+\begin{itemize}
+\item {\bf Static memory allocation}: acquiring a fixed-sized piece of memory for a variable at compile time.
+\pause \item {\bf Dynamic memory allocation}: acquiring a variable-length piece of memory at runtime. 
+\pause \item To use dynamic memory,
+\begin{enumerate}
+\pause \item use {\tt malloc()}, defined in {\tt stdlib.h}, to allocate memory.
+\pause \item use the variable like an ordinary array.
+\pause \item use {\tt free()} to release the memory. 
+\end{enumerate}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Dynamic memory allocation}
+\lstinputlisting[title=http://will-landau.com/gpu/Code/C/pointers/dy1.c, basicstyle=\tiny]{../../Code/C/pointers/dy1.c}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Dynamic memory allocation}
+\begin{lstlisting}
+> gcc dy1.c -o dy
+> ./dy
+a[0] = 10
+a[1] = 11
+a[2] = 14
+a[3] = 19
+a[4] = 26
+a[5] = 35
+a[6] = 46
+a[7] = 59
+a[8] = 74
+a[9] = 91
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Dynamic memory allocation}
+
+\lstset{title=http://will-landau.com/gpu/Code/C/pointers/dy2.c, basicstyle=\tiny}
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+
+#define M 10
+#define N 15
+
+void fill(float *x, int size){
+  int i;
+  for(i = 0; i < size; ++i){
+    x[i] = 10.25 + i*i;
+  }
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Dynamic memory allocation}
+
+\lstset{title=http://will-landau.com/gpu/Code/C/pointers/dy2.c, basicstyle=\tiny}
+\begin{lstlisting}
+int main(){
+  int i;
+  float *a, *b;
+  
+  a = (float *) malloc(M * sizeof(float));
+  b = (float *) malloc(N * sizeof(float));
+  
+  fill(a, M);
+  fill(b, N);
+  
+ for(i = 0; i < M; ++i){
+    printf("a[%d] = %f\n", i, a[i]);
+  }
+  printf("\n");
+  
+  for(i = 0; i < N; ++i){
+    printf("b[%d] = %f\n", i, b[i]);
+  }
+  
+  free(a);
+  free(b);
+}
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Dynamic memory allocation}
+\begin{lstlisting}
+> gcc dy2.c -o dy2
+> ./dy2
+a[0] = 10.250000
+a[1] = 11.250000
+a[2] = 14.250000
+a[3] = 19.250000
+a[4] = 26.250000
+a[5] = 35.250000
+a[6] = 46.250000
+a[7] = 59.250000
+a[8] = 74.250000
+a[9] = 91.250000
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Dynamic memory allocation}
+\begin{lstlisting}
+
+b[0] = 10.250000
+b[1] = 11.250000
+b[2] = 14.250000
+b[3] = 19.250000
+b[4] = 26.250000
+b[5] = 35.250000
+b[6] = 46.250000
+b[7] = 59.250000
+b[8] = 74.250000
+b[9] = 91.250000
+b[10] = 110.250000
+b[11] = 131.250000
+b[12] = 154.250000
+b[13] = 179.250000
+b[14] = 206.250000
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+\begin{frame}
+\frametitle{Resources}
+\begin{enumerate}
+\item Kernighan, B. W., and Ritchie, D. M. ”The ANSI C Programming Language”. 2nd Ed.
+\pause \item Savitch, W. ”Absolute C++”. 3rd Ed.
+\pause \item Jensen, T. ”A Tutorial on Pointers and Arrays in C”. http://pw1.netcom.com/~tjensen/ptr/pointers.htm
+\pause \item GPU series materials: \url{http://will-landau.com/gpu}.
+\end{enumerate}
+\end{frame}
+
+\end{document}

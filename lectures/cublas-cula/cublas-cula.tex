@@ -1,0 +1,826 @@
+%\documentclass{beamer}
+\documentclass[handout]{beamer}
+\usetheme{Marburg}
+\useoutertheme{infolines}
+\newcommand{\answers}{1}
+
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{natbib}
+\usepackage{url}
+
+\providecommand{\all}{\ \forall \ }
+\providecommand{\bs}{\backslash}
+\providecommand{\e}{\varepsilon}
+\providecommand{\E}{\ \exists \ }
+\providecommand{\lm}[2]{\lim_{#1 \rightarrow #2}}
+\providecommand{\m}[1]{\mathbb{#1}}
+\providecommand{\nv}{{}^{-1}}
+\providecommand{\ov}[1]{\overline{#1}}
+\providecommand{\p}{\newpage}
+\providecommand{\q}{$\quad$ \newline}
+\providecommand{\rt}{\rightarrow}
+\providecommand{\Rt}{\Rightarrow}
+\providecommand{\vc}[1]{\boldsymbol{#1}}
+\providecommand{\wh}[1]{\widehat{#1}}
+
+\hypersetup{colorlinks,linkcolor=,urlcolor=blue}
+\numberwithin{equation}{section}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  language=C,                % the language of the code
+  basicstyle= \footnotesize,           % the size of the fonts that are used for the code
+  numbers=left,
+  numberfirstline=true,
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=lrb,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text 
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=t,                   % sets the caption-position 
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  %title=\lstname,                   % show the filename of files included with \lstinputlisting;
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{gray},       % comment style
+  stringstyle=\color{dkgreen},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*, ...},               % if you want to add more keywords to the set
+  xleftmargin=0.2in, % left horizontal offset of caption box
+  xrightmargin=-.03in % right horizontal offset of caption box
+}
+
+%\DeclareCaptionFont{white}{\color{white}}
+%\DeclareCaptionFormat{listing}{\parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-0.05in}}
+%\captionsetup[lstlisting]{format = listing, labelfont = white, textfont = white}
+%For caption-free listings, comment out the 3 lines above and uncomment the 2 lines below.
+ \captionsetup{labelformat = empty, labelsep = none}
+ \lstset{frame = single}
+
+\title{The CUBLAS and CULA libraries}
+\author{Will Landau}
+\date{October 28, 2013}
+\institute{Iowa State University}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+ \end{frame}
+ 
+ \begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+ 
+ \AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
+\section{CUBLAS overview}
+
+\begin{frame}
+\frametitle{CUBLAS}
+\begin{itemize}
+\item {\bf CUBLAS}: CUda Basic Linear Algebra Subroutines, the CUDA C implementation of BLAS.
+\pause \item Consider scalars $\alpha, \beta$, vectors $\vc{x}$, $\vc{y}$, and matrices $A$, $B$, $C$.
+\pause \item 3 ``levels of functionality":
+\begin{itemize}
+\pause \item Level 1: $\vc{y} \mapsto \alpha \vc{x} + y$ and other vector-vector routines.
+\pause \item Level 2: $\vc{y} \mapsto \alpha A \vc{x} + \beta y$ and other vector-matrix routines.
+\pause \item Level 3: $C \mapsto \alpha AB + \beta C$ and other matrix-matrix routines.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Level 1 functions} \scriptsize
+\begin{itemize}
+\item Let $\alpha$ be a scalar, $\vc{x}$, $\vc{y}$, and $\vc{m}$ be vectors, $G = \begin{bmatrix} c & s \\ -s & c \end{bmatrix}$ be some $2 \times 2$ rotation matrix, and $H$ be an arbitrary $2 \times 2$ matrix,
+\end{itemize}
+
+\begin{center}
+\pause \begin{tabular}{l|c|c}
+in R & float & double \\ \hline
+{\tt which.max($\vc{x}$)} & {\tt cublasIsamax()} &{\tt  cutlasIdamax()} \\
+{\tt which.min($\vc{x}$)} &{\tt  cublasIsamin() }&{\tt  cublasIdamin()} \\
+{\tt sum(abs($\vc{x}$))} &{\tt  cublasSasum() }& {\tt cublasDasum()} \\
+{\tt $\alpha$ * $\vc{x}$ + $\vc{y}$-> $\vc{y}$} &{\tt  cublasSaxpy() }&{\tt cublasDaxpy()} \\
+{\tt $\vc{x}$ -> $\vc{y}$} &{\tt  cublasScopy() }&{\tt  cublasDcopy()} \\
+{\tt sum($\vc{x}$ * $\vc{y}$)} & {\tt cublasSdot()} & {\tt cublasDdot() }\\
+{\tt sqrt(sum($\vc{x}^2$))} &{\tt  cublasSnrm2()} &{\tt  cublasDnrm2()} \\
+{\tt $G$ \%*\% $\vc{x}$} & {\tt cublasSrot() }&{\tt  cublasDrot() }\\
+{\tt $H$ \%*\% $\vc{x}$} &{\tt  cublasSrotm() }& {\tt cublasDrotm() }\\
+{\tt $\alpha$ * $\vc{x}$ -> $\vc{x}$} & {\tt cublasSscal() }&{\tt  cublasDscal()} \\
+{\tt $\vc{x}$ -> $\vc{m}$; $\vc{y}$ -> $\vc{x}$; $\vc{m}$ -> $\vc{y}$} & {\tt cublasSswap() }&{\tt  cublasDswap()}
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+\pause \item Like everything in CUBLAS, there are also analogous functions for cuComplex and cuDoubleComplex types.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example level 2 functions}
+\scriptsize
+\begin{align*}
+\alpha \text{op}(A) \cdot \vc{x} + \beta \vc{y} \mapsto \vc{y}
+\end{align*}
+
+\pause where
+
+\begin{align*}
+\text{op}(A) = \begin{cases}
+A & \text{\tt transa == CUBLAS\_OP\_N} \\
+A^T & \text{\tt transa == CUBLAS\_OP\_T} \\
+A^H & \text{\tt transa == CUBLAS\_OP\_C} \\
+\end{cases}
+\end{align*}
+
+\pause \begin{center}
+\begin{tabular}{l|c|c}
+type of matrix, $A$ & float & double \\ \hline
+any $m \times n$ & {\tt cublasSgemv()} & {\tt cublasDgemv()} \\
+banded $m \times n$ & {\tt cublasSgbmv()} & {\tt cublasDgbmv()} \\
+symmetric, banded & {\tt cublasSbmv()} & {\tt cublasDbmv()} \\
+symmetric, packed format & {\tt cublasSspmv()} & {\tt cublasDspmv()} \\
+symmetric, triangular & {\tt cublasSsymv()} & {\tt cublasDsymv()}
+\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example level 3 functions} \scriptsize
+\begin{itemize}
+\item {\tt cublasSgemm()} and {\tt cublasDgemm()}: for any compatible matrices $A$, $B$, and $C$,
+
+
+\pause \begin{align*}
+\alpha \cdot \text{op}(A) \text{op}(B) + \beta C \mapsto C
+\end{align*}
+
+\pause \item {\tt cublasSgemmBatched()} and {\tt cublasDgemmBatched()}: for arrays of compatible matrices $A[]$, $B[]$, and $C[]$,
+
+\pause \begin{align*}
+\alpha \cdot \text{op}(A[i]) \text{op}(B[i]) + \beta C[i] \mapsto C[i]
+\end{align*}
+
+\pause \item {\tt cublasStrsm()} and {\tt cublasDtrsm()} solve for $X$ when $A$ is triangular:
+
+\pause \begin{align*}
+\begin{cases}
+\text{op}(A)X = \alpha B & \text{\tt trans == CUBLAS\_SIDE\_LEFT} \\
+\text{Xop}(A) = \alpha B & \text{\tt trans == CUBLAS\_SIDE\_RIGHT} \\
+\end{cases}
+\end{align*}
+\end{itemize}
+\end{frame}
+
+
+\section{Using CUBLAS}
+
+\begin{frame}[fragile]
+\frametitle{Implementation of matrices} \scriptsize
+\begin{itemize}
+\item Matrices stored in column major order in linear arrays of memory. 
+\pause Array $A$,
+
+\pause \begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|} \hline
+1 & 1 & 2 & 3 & 5 & 8 & 13 & 21 & 34 & 55 & 89 & 144 \\ \hline
+\end{tabular} \q \q
+\pause encodes matrix $B$,
+
+\begin{align*}
+\begin{bmatrix}
+1 & 5 & 32 \\
+1 & 8 & 55 \\
+2 & 13 & 89 \\
+3 & 21 & 144
+\end{bmatrix}
+\end{align*}
+
+\end{center}
+
+\pause \item Index by 
+\begin{align*}
+B[\text{row } i, \ \text{col } j] = A[j \cdot ld + i] 
+\end{align*}
+
+where $ld$ is the lead dimension of the matrix (column length for column major order matrices).
+
+
+\pause \item Use a macro for indexing:
+\begin{lstlisting}
+#define IDX2F(i, j, ld) j * ld + i
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{CUBLAS context}
+\begin{itemize}
+\item For CUBLAS version $\ge $ 4.0, you must create a CUBLAS context:
+\pause \begin{lstlisting}
+cublasHandle_t handle;
+cublasCreate(&handle);
+
+// your code
+
+cublasDestroy(handle);
+\end{lstlisting}
+\pause \item Pass {\tt handle} to every CUBLAS function in your code.
+\pause \item This approach allows the user to use multiple host threads and multiple GPUs.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{CUBLAS helper functions}
+\begin{itemize}
+\item You don't actually need them, but you might see them:
+\begin{itemize}
+\item {\tt cublasSetVector()}
+\item {\tt cublasGetVector()}
+\item {\tt cublasSetMatrix()}
+\item {\tt cublasGetMatrix()}
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Choosing the right header file}
+\begin{itemize}
+\item 2 choices of API 
+\begin{itemize}
+\pause \item {\tt cublas\_v2.h}: API for CUBLAS version 4.0 and above.
+\pause \item {\tt cublas.h}: older API for programs written with CUBLAS version $<$ 4.0.
+\end{itemize}
+\pause \item Additions to newer API:
+\begin{itemize}
+\pause \item {\tt cublasCreate()} initializes the handle to the CUBLAS library context.
+\pause \item Scalars can be passed by reference or by value to device functions.
+\pause \item All CUBLAS functions return an error status, {\tt cublasStatus\_t}.
+\pause \item {\tt cublasAlloc()} and {\tt cublasFree()} are deprecated. Use {\tt cudaMalloc()} and {\tt cudaFree()} instead.
+\pause \item {\tt cublasSetKernelStream()} was renamed {\tt cublasSetStream()}.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Compiling with CUBLAS}
+\begin{enumerate}
+\item Include either {\tt cublas\_v2.h} or {\tt cublas.h} in your source
+\pause \item Link the CUBLAS library with the {\tt -lcublas} flag.
+\end{enumerate}
+
+\begin{itemize}
+\pause \item {\tt Example2.cu}:
+\end{itemize}
+
+\begin{lstlisting}
+> nvcc -lcublas Example2.cu -o Example2.
+> ./Example2
+      1      7     13     19     25     31
+      2      8     14     20     26     32
+      3   1728    180    252    324    396
+      4    160     16     22     28     34
+      5    176     17     23     29     35
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\lstset{basicstyle=\tiny}
+
+\frametitle{{\tt Example2.cu}}
+\begin{lstlisting}[name=ex2]
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <math.h> 
+#include <cuda_runtime.h> 
+#include <cublas_v2.h>
+#define M 6
+#define N 5
+#define IDX2F(i,j,ld) (((j-1)*ld)+(i-1))
+
+static __inline__ void modify (cublasHandle_t handle, float *m, int ldm, int n, int p,
+  int q, float alpha, float beta){
+  cublasSscal (handle, n - p+1, &alpha, &m[IDX2F(p,q,ldm)], ldm);
+  cublasSscal (handle, ldm - p+1, &beta, &m[IDX2F(p,q,ldm)], 1);
+}
+
+int main (void){ 
+  cudaError_t cudaStat;
+  cublasStatus_t stat;
+  cublasHandle_t handle;
+  int i, j;
+  float* devPtrA;
+  float* a = 0;
+  a = (float *)malloc (M * N * sizeof (*a)); 
+  if (!a) {
+    printf ("host memory allocation failed");
+    return EXIT_FAILURE;
+  }
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{{\tt Example2.cu}} \lstset{basicstyle=\tiny}
+
+\begin{lstlisting}[name=ex2]
+  for (j = 1; j <= N; j++) {
+    for (i = 1; i <= M; i++) {
+      a[IDX2F(i,j,M)] = (float)((i-1) * M + j); 
+    }
+  }
+
+  cudaStat = cudaMalloc ((void**)&devPtrA, M*N*sizeof(*a)); 
+  if ( cudaStat != cudaSuccess ) {
+    printf ("device memory allocation failed");
+    return EXIT_FAILURE;
+  }
+  
+  stat = cublasCreate(&handle);
+  if ( stat != CUBLAS_STATUS_SUCCESS ) {
+    printf ("CUBLAS initialization failed\n");
+    return EXIT_FAILURE; 
+  }
+
+  stat = cublasSetMatrix (M, N, sizeof(*a), a, M, devPtrA, M);
+ 
+   if(stat != CUBLAS_STATUS_SUCCESS) {
+    printf("data download failed");
+    cudaFree(devPtrA);
+    cublasDestroy(handle);
+    return EXIT_FAILURE;
+  }
+ 
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{{\tt Example2.cu}}  \lstset{basicstyle=\tiny}
+\begin{lstlisting}[name=ex2]
+
+
+  modify (handle, devPtrA, M, N, 2, 3, 16.0f, 12.0f);
+
+  stat = cublasGetMatrix (M, N, sizeof(*a), devPtrA, M, a, M);
+  if( stat != CUBLAS_STATUS_SUCCESS ) {
+    printf ("data upload failed");
+    cudaFree (devPtrA);
+    cublasDestroy ( handle );
+    return EXIT_FAILURE;
+  }
+
+  cudaFree ( devPtrA );
+  cublasDestroy ( handle );
+
+  for (j = 1; j <= N; j++) {
+    for (i = 1; i <= M; i++) {
+      printf ("%7.0f", a[IDX2F(i,j,M)]);
+    }
+    printf ( "\n" );
+  }
+  return EXIT_SUCCESS;
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Example: {\tt ols.cu}}
+
+\begin{itemize}
+\item I will attempt to solve the least squares problem,
+
+
+\begin{align*}
+\vc{y} = X \vc{ \beta} + \vc{\e} 
+\end{align*}
+
+by computing the solution,
+
+\begin{align*}
+\wh{\vc{\beta}} = (X^T X)^{-1}X^T \vc{y}
+\end{align*}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Example: {\tt ols.cu}}  \lstset{basicstyle=\tiny}
+\begin{lstlisting}[name=ols]
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <cuda_runtime.h>
+#include <cublas_v2.h>
+#include <cula.h>
+#include <math.h>
+
+#define I(i, j, ld) j * ld + i
+
+#define CUDA_CALL(x) {if((x) != cudaSuccess){ \
+  printf("CUDA error at %s:%d\n",__FILE__,__LINE__); \
+  printf("  %s\n", cudaGetErrorString(cudaGetLastError())); \
+  exit(EXIT_FAILURE);}} 
+
+float rnorm(){
+  float r1 = ((float) rand()) / ((float) RAND_MAX);
+  float r2 = ((float) rand()) / ((float) RAND_MAX);
+  return sqrt( -2 * log(r1) ) * cos(2 * 3.1415 * r2);
+}
+
+int main(){
+  int i, j;
+  int n = 10;
+  int p = 3;
+  int* ipiv;
+  float k;
+  float *X, *XtX, *XtY, *beta, *Y, *dX, *dXtX, *dXtY, *dbeta, *dY;
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Example: {\tt ols.cu}}  \lstset{basicstyle=\tiny}
+\begin{lstlisting}[name=ols]
+  float *a, *b;
+  a = (float*) malloc(sizeof(*X));
+  b = (float*) malloc(sizeof(*X));
+  *a = 1.0;
+  *b = 0.0;
+
+  cublasHandle_t handle;
+  cublasCreate(&handle);
+
+  X = (float*) malloc(n * p * sizeof(*X));
+  XtX = (float*) malloc(p * p * sizeof(*X));
+  XtY = (float*) malloc(p * sizeof(*X));
+  beta = (float*) malloc(p * sizeof(*X));
+  Y = (float*) malloc(n * sizeof(*X));
+  
+  CUDA_CALL(cudaMalloc((void**) &ipiv, p * p * sizeof(*ipiv)));
+  CUDA_CALL(cudaMalloc((void**) &dX, n * p * sizeof(*X)));
+  CUDA_CALL(cudaMalloc((void**) &dXtX, p * p * sizeof(*X)));
+  CUDA_CALL(cudaMalloc((void**) &dXtY, p * sizeof(*X)));
+  CUDA_CALL(cudaMalloc((void**) &dbeta, p * sizeof(*X)));
+  CUDA_CALL(cudaMalloc((void**) &dY, n * sizeof(*X)));
+ 
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Example: {\tt ols.cu}}  \lstset{basicstyle=\tiny}
+\begin{lstlisting}[name=ols]
+  printf("Y\t\tX\n");
+  for(i = 0; i < n; i++){
+    k = (float) i;
+    X[I(i, 0, n)] = 1.0;
+    X[I(i, 1, n)] = k / 10.0;
+    X[I(i, 2, n)] = k * k / 10.0;  
+    Y[i] = (k - 5.0) * (k - 2.3) / 3.0 + rnorm();
+    
+    printf("%0.2f\t\t", Y[i]);
+    for(j = 0; j < p; j++){
+      printf("%0.2f\t", X[I(i, j, n)]);
+    } 
+    printf("\n");
+  }
+  printf("\n");
+
+  CUDA_CALL(cudaMemcpy(dX, X, n * p * sizeof(float), cudaMemcpyHostToDevice));
+  CUDA_CALL(cudaMemcpy(dY, Y, n * sizeof(float), cudaMemcpyHostToDevice));
+
+  cublasSgemm(handle, CUBLAS_OP_T, CUBLAS_OP_N, p, p, n, 
+    a, dX, n, dX, n, b, dXtX, p);
+
+  CUDA_CALL(cudaMemcpy(XtX, dXtX, p * p * sizeof(float), cudaMemcpyDeviceToHost));
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Example: {\tt ols.cu}}  \lstset{basicstyle=\tiny}
+\begin{lstlisting}[name=ols]
+  printf("XtX\n");
+  for(i = 0; i < p; i++){
+    for(j = 0; j < p; j++){
+      printf("%0.2f\t", XtX[I(i, j, p)]);
+    }
+    printf("\n");
+  }
+  printf("\n");
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Output of code so far}  \lstset{basicstyle=\tiny}
+
+\begin{lstlisting}[name=olsoutput]
+> nvcc -I /usr/local/cula/include -L /usr/local/cula/lib64 -lcula_core -lcula_lapack -lcublas -lcudart ols.cu -o ols
+> ./ols
+Y		X
+3.37		1.00	0.00	0.00	
+1.94		1.00	0.10	0.10	
+0.44		1.00	0.20	0.40	
+-0.30		1.00	0.30	0.90	
+-2.08		1.00	0.40	1.60	
+-0.84		1.00	0.50	2.50	
+-0.18		1.00	0.60	3.60	
+3.40		1.00	0.70	4.90	
+5.51		1.00	0.80	6.40	
+7.39		1.00	0.90	8.10	
+
+XtX
+10.00	4.50	28.50	
+4.50	2.85	20.25	
+28.50	20.25	153.33	
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Example: {\tt ols.cu}}
+\begin{itemize}
+\item We have $X^T X$, but which we need to invert in order to compute our solution,
+\pause \begin{align*}
+\wh{\vc{\beta}} = (X^T X)^{-1}X^T \vc{y}
+\end{align*}
+\pause \item But CUBLAS can only invert triangular matrices!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Enter CULA: CUDA LAPACK} \lstset{basicstyle=\tiny}
+\begin{lstlisting}[name=ols]
+  culaInitialize();
+  
+  culaDeviceSgetrf(p, p, dXtX, p, ipiv);
+  culaDeviceSgetri(p, dXtX, p, ipiv);
+  
+  CUDA_CALL(cudaMemcpy(XtX, dXtX, p * p * sizeof(float), cudaMemcpyDeviceToHost));
+
+  printf("XtX^(-1)\n");
+  for(i = 0; i < p; i++){
+    for(j = 0; j < p; j++){
+      printf("%0.2f\t", XtX[I(i, j, p)]);
+    }
+    printf("\n");
+  }
+  printf("\n");
+
+  cublasSgemm(handle, CUBLAS_OP_T, CUBLAS_OP_N, p, 1, n, 
+    a, dX, n, dY, n, b, dXtY, p);
+
+  cublasSgemv(handle, CUBLAS_OP_N, p, p, 
+    a, dXtX, p, dXtY, 1, b, dbeta, 1);
+
+  CUDA_CALL(cudaMemcpy(beta, dbeta, p * sizeof(float), cudaMemcpyDeviceToHost));
+
+  printf("CUBLAS/CULA matrix algebra parameter estimates:\n");
+  for(i = 0; i < p; i++){
+    printf("beta_%i = %0.2f\n", i, beta[i]);
+  }
+  printf("\n");
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{CULA's {\tt culaSgels()} does least squares for you}  \lstset{basicstyle=\tiny}
+\begin{lstlisting}[name=ols]
+  culaSgels('N', n, p, 1, X, n, Y, n);
+
+  printf("culaSgels Parameter estimates:\n");
+  for(i = 0; i < p; i++){
+    printf("beta_%i = %0.2f\n", i, Y[i]);
+  }
+  printf("\n");
+
+  culaShutdown();
+  cublasDestroy(handle);
+
+  free(a);
+  free(b);
+  free(X);
+  free(XtX);
+  free(XtY);
+  free(beta);
+  free(Y);
+
+  CUDA_CALL(cudaFree(dX));
+  CUDA_CALL(cudaFree(dXtX));
+  CUDA_CALL(cudaFree(dXtY));
+  CUDA_CALL(cudaFree(dbeta));
+  CUDA_CALL(cudaFree(dY));
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Rest of the output}
+\begin{lstlisting}[name=olsoutput]
+XtX^(-1)
+0.62	-2.59	0.23	
+-2.59	16.55	-1.70	
+0.23	-1.70	0.19	
+
+CUBLAS/CULA matrix algebra parameter estimates:
+beta_0 = 3.78
+beta_1 = -25.53
+beta_2 = 3.36
+
+culaSgels Parameter estimates:
+beta_0 = 3.78
+beta_1 = -25.53
+beta_2 = 3.36
+\end{lstlisting}
+\end{frame}
+
+\section{CULA}
+
+\begin{frame}
+\frametitle{More on CULA}
+\begin{itemize}
+\item {\tt CULA}: the CUDA C implementation of LAPACK
+\pause \item Features:
+\begin{itemize}
+\item More matrix algebra routines
+\item Factorizations: LU, QR, RQ, QL, SVD, and Cholesky
+\item Solving systems of linear equations (matrix inversion)
+\item Least squares
+\item Eigenvalue solvers
+\end{itemize}
+\pause \item Interfaces (collections of functions)
+\begin{itemize}
+\pause \item {\bf Standard}: users need not micromanage GPU memory or copy data to or from the GPU.
+\pause \item {\bf Device}: users need explicitly to allocate GPU memory and copy to and from the GPU.
+\end{itemize}
+\pause \item Be careful of the standard interface functions: they're convenient, but they copy to and from the GPU with every call.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{CULA naming conventions}
+
+\begin{align*}
+\underbrace{\text{\Huge cula}}_\text{prefix} \underbrace{\text{\Huge S}}_\text{type} \underbrace{\text{\Huge ge}}_\text{matrix} \underbrace{\text{\Huge qrf}}_\text{routine}
+\end{align*}
+
+\begin{itemize} \scriptsize
+\pause \item Prefix: {\tt cula} for standard interface, {\tt culaDevice} for device interface:
+\pause \item Type: single precision ({\tt S}),  single precision complex ({\tt C}), double precision real ({\tt D}), or double precision complex ({\tt Z}).
+\pause \item Matrix:
+\begin{center}
+\begin{tabular}{l|l}
+{\tt bd} & Bidiagonal \\
+{\tt ge} & General \\
+{\tt gg} & General matrices, generalized problem \\
+{\tt he} & Hermitian symmetric \\
+{\tt or} & (Real) orthogonal \\
+{\tt sb} & Symmetric, banded \\
+{\tt sy} & Symmetric \\
+{\tt tr} & Triangular \\
+{\tt un} & (Complex) unitary
+\end{tabular}
+\end{center}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{CULA naming conventions}
+
+\begin{align*}
+\underbrace{\text{\Huge cula}}_\text{prefix} \underbrace{\text{\Huge S}}_\text{type} \underbrace{\text{\Huge ge}}_\text{matrix} \underbrace{\text{\Huge qrf}}_\text{routine}
+\end{align*}
+\small
+\begin{itemize}
+\item Routine:
+\begin{center}
+\begin{tabular}{l|l}
+{\tt trf} & Triangular factorization \\
+{\tt sv} & Factor a matrix and solve system of linear equations \\
+{\tt qrf} & QR factorization without pivoting \\
+{\tt svd} & Singular value decomposition \\
+{\tt ls} & Solve over- or under-determined linear system
+\end{tabular}
+\end{center}
+\item Consult the CULA manual for other routines.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Compiling with CULA}
+\begin{itemize}
+\item Include {\tt cula\_lapack.h} for the standard interface, {\tt cula\_lapack\_device.h} for the device interface, or {\tt cula.h} for both.
+\pause \item Compile on impact1 with:
+\begin{lstlisting}
+nvcc -I /usr/local/cula/include -L /usr/local/cula/lib64 -lcula_core -lcula_lapack -lcublas -lcudart your_source.cu -o your_binary
+\end{lstlisting}
+\begin{itemize}
+\pause \item {\tt -I /usr/local/cula/include} tells the compiler, {\tt nvcc}, where to find the header files.
+\pause \item {\tt -L /usr/local/cula/lib64} tells {\tt nvcc} where the CULA library is (the 64-bit version in this case).
+\pause \item {\tt -lcula\_core -lcula\_lapack -lcublas -lcudart} links the required libraries to your binary.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Minimal working example: {\tt mwe.cu}}
+\begin{lstlisting}[name=mwe]
+#include <cula.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+int main(){
+  
+  culaStatus s;
+  s = culaInitialize();
+  
+  if(s != culaNoError)
+    printf("%s\n", culaGetErrorInfo());
+    
+  /* ... Your code ... */
+  
+  culaShutdown();
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Minimal working example: {\tt mwe.cu}}
+\begin{lstlisting}[name=mwe]
+> nvcc -I /usr/local/cula/include -L /usr/local/cula/lib64 -lcula_core -lcula_lapack -lcublas -lcudart mwe.cu -o mwe
+> ./mwe
+> 
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Resources} \small
+
+\begin{itemize}
+\item Guides:
+\begin{enumerate}
+ \item \href{http://docs.nvidia.com/cuda/pdf/CUDA_CUBLAS_Users_Guide.pdf}{”CUDA Toolkit 4.2 CUBLAS Library”}
+\pause \item \href{http://www.culatools.com/cula_dense_programmers_guide/}{``CULA Programmer’s Guide". CULA Tools.}
+\pause \item \href{http://geco.mines.edu/tesla/cula/CULAReferenceManual_1.1.pdf}{"CULA Reference Manual". CULA Tools.}
+\end{enumerate}
+\pause \item Code from today:
+\begin{itemize}
+\item \href{http://will-landau.com/gpu/Code/CUDA_C/CUBLAS/Example2/Example2.cu}{Example2.cu}
+\item \href{http://will-landau.com/gpu/Code/CUDA_C/CULA/ols/ols.cu}{ols.cu}
+\item \href{http://will-landau.com/gpu/Code/CUDA_C/CULA/mwe/mwe.cu}{mwe.cu}
+\end{itemize}
+\pause \item Other example code:
+\begin{itemize}
+\item \href{http://will-landau.com/gpu/Code/CUDA_C/CUBLAS/simpleCUBLAS/simpleCUBLAS.cpp}{simpleCUBLAS.cpp}
+\item \href{http://will-landau.com/gpu/Code/CUDA_C/CULA/Argument_Errors/ae.cu}{ae.cu}
+\item \href{http://will-landau.com/gpu/Code/CUDA_C/CULA/Data_Errors/de.cu}{de.cu}
+\item \href{http://will-landau.com/gpu/Code/CUDA_C/CULA/deviceInterface/deviceInterface.c}{deviceInterface.c}
+\item \href{http://will-landau.com/gpu/Code/CUDA_C/CULA/Library_Link_Check/ll.cu}{ll.cu}
+\item \href{http://will-landau.com/gpu/Code/CUDA_C/CULA/systemSolve/systemSolve.c}{systemSolve.c}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{That's all for today.}
+\begin{itemize}
+\item Series materials are available at \url{http://will-landau.com/gpu}.
+\end{itemize}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,85 @@
+<input>
+
+# Number of models for which details are described in this input file
+<modelnumber> 1 </modelnumber>
+
+# Restart from previous (pickled) population?
+<restart> False </restart>
+
+# Automatic epsilon schedule. Provide a vector of final epsilons and the alpha (defaults to 0.9)
+<autoepsilon>
+<finalepsilon> 35.0 </finalepsilon>
+<alpha> 0.1 </alpha>
+</autoepsilon>
+
+# Population size
+<particles> 100 </particles>
+
+# Beta is the number of times to simulate each sampled parameter set.
+# This is only applicable for models simulated using Gillespie and SDE
+<beta> 1 </beta>
+
+# Internal timestep for solver.
+# Make this small for a stiff model.
+<dt> 1 </dt>
+
+
+<data>
+ # times: For ABC SMC, times must be a whitespace delimited list
+ # In simulation mode these are the timepoints for which the simulations will be output
+ <times> 0.0 0.6 4.2 6.2 8.6 13.4 16 21.4 27.6 34.4 39.8 40.6 45.2 </times>
+
+ # variables: For ABC SMC, whitespace delimited lists of concentrations (ODE or SDE) or molecule numbers (Gillespie)
+ # Denote your data via tags <v1> </v1> or <var1> </var1> or <v2> </v2> etc. The tags are ignored and the data read in order
+ # For simulation these data are ignored
+ # See fitting instruction below if the dimensionality of your data sets differ from the dimensionality of your model
+ <variables>
+ <var1> 0 2.04 32.29 4.13 2.15 5.09 1.07 3.67 39.01 73.83 8.54 17.62 11.96 </var1>
+ <var2> 0 28.99 32.29 10.61 55.27 9.49 68.56 10.62 -1.95 3.53 63.87 39.68 -0.6 </var2>
+ <var3> 0 20.96 7.49 44.25 7.12 60.52 8.10 63.76 22.9 6.27 10.59 6.50 70.56 </var3>
+ </variables>
+</data>
+
+<models>
+<model1>
+<name> repressilator </name>
+<source> repressilator.xml </source>
+
+# type: the method used to simulate your model. ODE, SDE or Gillespie.
+<type> ODE </type>
+
+# Fitting information. If fit is None, all species in the model are fitted to the data in the order they are listed in the model.
+# Otherwise, give a whitespace delimited list of fitting instrictions the same length as the dimensions of your data.
+# Use speciesN to denote the Nth species in your model. Simple arithmetic operations can be performed on the species from your model.
+# For example, to fit the sum of the first two species in your model to your first variable, write fit: species1+species2
+<fit> species1 species3 species5 </fit>
+
+# Priors on initial conditions and parameters:
+# one of 
+#       constant, value 
+#       normal, mean, variance 
+#       uniform, lower, upper 
+#       lognormal, mean, variance 
+
+<initial>
+ <ic1> constant 0.0 </ic1>
+ <ic2> constant 2.0 </ic2>
+ <ic3> constant 0.0 </ic3>
+ <ic4> constant 1.0 </ic4>
+ <ic5> constant 0.0 </ic5>
+ <ic6> constant 3.0 </ic6>
+</initial>
+
+
+<parameters>
+<parameter1> constant 1 </parameter1>
+<parameter2> uniform -2 10 </parameter2>
+<parameter3> uniform  0 10 </parameter3>
+<parameter4> uniform -5 20 </parameter4>
+<parameter5> uniform 500 2500 </parameter5>
+<parameter6> constant 1 </parameter6>
+</parameters>
+</model1>
+</models>
+
+</input>

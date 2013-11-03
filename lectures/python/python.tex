@@ -1,0 +1,1701 @@
+\documentclass[handout]{beamer}
+\usetheme{Marburg}
+\useoutertheme{infolines}
+\newcommand{\answers}{1}
+
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage{color}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{natbib}
+\usepackage{url}
+
+\providecommand{\all}{\ \forall \ }
+\providecommand{\bs}{\backslash}
+\providecommand{\e}{\varepsilon}
+\providecommand{\E}{\ \exists \ }
+\providecommand{\lm}[2]{\lim_{#1 \rightarrow #2}}
+\providecommand{\m}[1]{\mathbb{#1}}
+\providecommand{\nv}{{}^{-1}}
+\providecommand{\ov}[1]{\overline{#1}}
+\providecommand{\p}{\newpage}
+\providecommand{\q}{$\quad$ \newline}
+\providecommand{\rt}{\rightarrow}
+\providecommand{\Rt}{\Rightarrow}
+\providecommand{\vc}[1]{\boldsymbol{#1}}
+\providecommand{\wh}[1]{\widehat{#1}}
+
+\hypersetup{colorlinks,linkcolor=,urlcolor=blue}
+\numberwithin{equation}{section}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{ 
+  language=C,                % the language of the code
+  basicstyle= \tiny,           % the size of the fonts that are used for the code
+  numbers=left,
+  numberfirstline=true,
+  numbersep=5pt,                  % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,               % show spaces adding particular underscores
+  showstringspaces=false,         % underline spaces within strings
+  showtabs=false,                 % show tabs within strings adding particular underscores
+  frame=lrb,                   % adds a frame around the code
+  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text 
+  tabsize=2,                      % sets default tabsize to 2 spaces
+  captionpos=t,                   % sets the caption-position 
+  breaklines=true,                % sets automatic line breaking
+  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+  %title=\lstname,                   % show the filename of files included with \lstinputlisting;
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{gray},       % comment style
+  stringstyle=\color{dkgreen},         % string literal style
+  escapeinside={\%*}{*)},            % if you want to add LaTeX within your code
+  morekeywords={*, ...},               % if you want to add more keywords to the set
+  xleftmargin=0.053in, % left horizontal offset of caption box
+  xrightmargin=-.03in % right horizontal offset of caption box
+}
+
+%\DeclareCaptionFont{white}{\color{white}}
+%\DeclareCaptionFormat{listing}{\parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-0.05in}}
+%\captionsetup[lstlisting]{format = listing, labelfont = white, textfont = white}
+%For caption-free listings, comment out the 3 lines above and uncomment the 2 lines below.
+ \captionsetup{labelformat = empty, labelsep = none}
+ \lstset{frame = single}
+
+\title{Introduction to Python 2 for statisticians}
+\author{Will Landau}
+\date{November 18, 2013}
+\institute{Iowa State University}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+ \end{frame}
+ 
+ \begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+ 
+ \AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
+\section{Basic elements}
+
+\begin{frame}[fragile]
+\frametitle{Preliminaries}
+\begin{itemize}
+\item Python is a high-level multipurpose interpreted language. 
+\pause \item It's clumsier than R at number crunching, and better than R at string manipulation.
+\pause \item Open the interpreter by typing {\tt python} into the command line.
+\begin{lstlisting}[name=ex]
+> python
+Python 2.7.2 (default, Oct 11 2012, 20:14:37) 
+[GCC 4.2.1 Compatible Apple Clang 4.0 (tags/Apple/clang-418.0.60)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> 
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Preliminaries}
+\begin{itemize}
+\item You can create variables and do arithmetic:
+\end{itemize}
+\begin{lstlisting}[name=ex]
+>>> a = 1
+>>> b = 2
+>>> c = "goober"
+>>> c
+'goober'
+>>> a+b
+3
+>>> 
+\end{lstlisting}
+\begin{itemize}
+\pause \item You can make a python script like {\tt world.py}:
+\end{itemize}
+\begin{lstlisting}[name=ex]
+s = "Hello World"
+print(s)
+\end{lstlisting}
+\begin{itemize}
+\pause \item And run it in the command line:
+\end{itemize}
+\begin{lstlisting}[name=ex]
+> python hello_world.py
+Hello World
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Preliminaries}
+\begin{itemize}
+\item Use the hash sign for single-line comments.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> # print("Hello world!")
+>>> 
+\end{lstlisting}
+
+
+\pause 
+\begin{itemize}
+\item Triple-quoted strings span multiple lines and serve as multi-line comments.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+# a.py
+"""
+This program
+does nothing. 
+"""
+\end{lstlisting}
+
+\begin{lstlisting}[name=ex]
+> python a.py
+>
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Preliminaries}
+
+\begin{itemize}
+\item Formatting strings
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> s = "Today's date is {month}/{day}/{year}".format(month = 10, day = 22, \
+...       year = 2012)
+>>>       
+... print(s)
+Today's date is 10/22/2012
+>>> 
+\end{lstlisting}
+
+\pause 
+\begin{itemize}
+\item Every string has builtin methods such as {\tt format()}, which can be accessed with the dot operator.
+\pause \item There are multiple ways to format output.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> a = 3
+>>> b = 4.8878
+>>> s = format("sample %d: mass= %0.3fg" % (a, b))
+>>> print(s)
+sample 3: mass= 4.888g
+>>> 
+>>> print("sample %d: mass= %0.3fg" % (a, b))
+sample 3: mass= 4.888g
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{User-defined functions}
+
+\begin{itemize}
+\item I can define and use my own function like this:
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> def f1(a):
+...   if a == 0:
+...     print("hi")
+...     return(0)
+...   elif a < 0:
+...     print("stop")
+...     return(1)
+...   else:
+...     return(5)
+... 
+>>> f1(0)
+hi
+0
+>>> f1(1)
+5
+>>> f1(-1)
+stop
+1
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Indentation}
+
+\begin{itemize}
+\item In python, indention is used to denote nested blocks of code (like \{ and \} in C). Indentation must be consistent. 
+\pause \item The following script, {\tt a.py}, has an indentation error.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+# a.py
+def f1(a):
+  if a == 0:
+    print("hi")
+    return(0)
+  elif a < 0:
+    print("stop")
+    return(1)
+  else:
+  return(5)
+\end{lstlisting}
+
+\pause
+\begin{itemize}
+\item When I try to run it,
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+> python a.py
+  File "a.py", line 10
+    return(5)
+         ^
+IndentationError: expected an indented block
+\end{lstlisting}
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Line continuation}
+
+\begin{itemize}
+\item With the exception of multi-line quotes, you have to use the line continuation character, '$\backslash$', when you want to wrap text in your code:
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> 1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1
+29
+>>> 1+1+1+1+1+1+1+
+  File "<stdin>", line 1
+    1+1+1+1+1+1+1+
+                 ^
+SyntaxError: invalid syntax
+>>>
+>>> 1+1+1+1+1+1+1+ \
+... 1+1+1+1+1+1+1+1
+15
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Logic and control flow}
+
+\begin{lstlisting}[name=ex]
+>>> 1 and 2
+2
+>>> 1 == 1
+True
+>>> 1 == 0
+False
+>>> 1 == 1 and 2 == 0
+False
+>>> 1 > 1 or 2 <= 5
+True
+>>> not True
+False
+>>> True and not False
+True
+>>> if True:
+...   print("yes")
+... else:
+...   print("no")
+... 
+yes
+>>> 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Logic and control flow}
+
+\begin{lstlisting}[name=ex]
+>>> a = 1
+>>> if a == 2:
+...   print("two")
+... elif a < -1000:
+...   print("a is small")
+... elif a > 100 and not a % 2:
+...   print("a is big and even")
+... else:
+...   print("a is none of the above.")
+... 
+a is none of the above.
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Stings: where Python is strong}
+
+\begin{itemize}
+\item You can use single, double, or triple quotes to denote string literals.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> a = "Hello World"
+>>> b = 'Python is groovy'
+>>> c = """Computer says 'No'"""
+>>> 
+\end{lstlisting}
+
+\pause 
+\begin{itemize}
+\item Triple quotes can extend over multiple lines, but single and double quotes cannot.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> c = """Computer says 'no'
+... because another computer
+... says yes"""
+>>> a = "hello
+  File "<stdin>", line 1
+    a = "hello
+             ^
+SyntaxError: EOL while scanning string literal
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Strings: where Python is strong}
+
+\begin{itemize}
+\item Strings are stored as sequences of characters.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> a = "Hello World"
+>>> a[0]
+'H'
+>>> a[:5]
+'Hello'
+>>> a[6:]
+'World'
+>>> a[3:8]
+'lo Wo'
+>>> 
+\end{lstlisting}
+
+\pause
+\begin{itemize}
+\item You can convert numeric types into strings and vice versa.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> z = "90"
+>>> z
+'90'
+>>> int(z)
+90
+>>> float(z)
+90.0
+>>> str(90.25)
+'90.25'
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Strings: where Python is strong}
+
+\begin{itemize}
+\item And you can concatenate strings.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> "123" + "abc"
+'123abc'
+>>> "123" + str(123.45)
+'123123.45'
+>>> a = 1
+>>> b = "2"
+>>> str(a) + b
+'12'
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Strings: where Python is strong}
+
+\begin{itemize}
+\item There are several useful methods for strings.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> s = "Hello world!"
+>>> len(s)
+12
+>>>
+>>> s = "5, 4, 2, 9, 8, 7, 28"
+>>> s.count(",")
+6
+>>> s.find("9, ")
+9
+>>> s[9:12]
+'9, '
+>>> "abc123".isalpha()
+False
+>>> "abc123".isalnum()
+True
+>>> s.split(",")
+['5', ' 4', ' 2', ' 9', ' 8', ' 7', ' 28']
+>>> ", ".join(["ready", "set", "go"])
+'ready, set, go'
+>>> "ready\n set\n go".splitlines()
+['ready', ' set', ' go']
+>>> "ready set go".splitlines()
+['ready set go']
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Lists}
+
+\begin{itemize}
+\item In python, a list is an ordered sequence of objects, each of which can have any type.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> s = [1, 2, "Five!", ["Three, sir!", "Three!"]]
+>>> len(s)
+4
+>>> 
+>>> s[0:1]
+[1]
+>>> s[2]
+'Five!'
+>>> s[2][1]
+'i'
+>>> s[3]
+['Three, sir!', 'Three!']
+>>> s[3][0]
+'Three, sir!'
+>>> s[3][1]
+'Three!'
+>>> s[3][1][1]
+'h'
+>>> s.append("new element")
+>>> s
+[1, 2, 'Five!', ['Three, sir!', 'Three!'], 'new element']
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Lists}
+
+\begin{itemize}
+\item I can append and remove list elements.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> l = ["a", "b", "c"]
+>>> l.append("d")
+>>> l.append("c")
+>>> l
+['a', 'b', 'c', 'd', 'c']
+>>> l.remove("a")
+>>> l
+['b', 'c', 'd', 'c']
+>>> l.remove("c")
+>>> l
+['b', 'd', 'c']
+>>> l.remove("c")
+>>> l
+['b', 'd']
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{Tuples}
+
+\begin{lstlisting}[name=ex]
+>>> a = ()
+>>> b = (3,)
+>>> c = (3,4,"thousand")
+>>> len(c)
+3
+>>>
+>>> number1, number2, word = c
+>>> number1
+3
+>>> number2
+4
+>>> word
+'thousand'
+>>> keys =["name", "status", "ID"]
+>>> values = ["Joe", "approved", 23425]
+>>> z = zip(keys, values)
+>>> z
+[('name', 'Joe'), ('status', 'approved'), ('ID', 23425)]
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Dictionaries}
+
+\begin{lstlisting}[name=ex]
+>>> stock = {
+... "name" : "GOOG",
+... "shares" : 100,
+... "price" : 490.10 }
+>>> stock
+{'price': 490.1, 'name': 'GOOG', 'shares': 100}
+>>> stock["name"]
+'GOOG'
+>>> stock["date"] = "today"
+>>> stock
+{'date': 'today', 'price': 490.1, 'name': 'GOOG', 'shares': 100}
+>>> keys = ["name", "status", "ID"]
+>>> values = ["Joe", "approved", 23425]
+>>> zip(keys, values)
+[('name', 'Joe'), ('status', 'approved'), ('ID', 23425)]
+>>> d = dict(zip(keys, values))
+>>> d
+{'status': 'approved', 'name': 'Joe', 'ID': 23425}
+>>> 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Iteration and looping}
+
+\begin{itemize}
+\item There are many ways to iterate.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+# a.py
+a = "Hello World"
+# Print out the individual characters in a 
+for c in a:
+  print c
+\end{lstlisting}
+
+\pause 
+\begin{lstlisting}[name=ex]
+> python a.py
+H
+e
+l
+l
+o
+ 
+W
+o
+r
+l
+d
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Iteration and looping}
+
+\begin{lstlisting}[name=ex]
+# a.py
+b = ["Dave","Mark","Ann","Phil"] 
+# Print out the members of a list 
+for name in b:
+  print name
+\end{lstlisting}
+
+\pause
+\begin{lstlisting}[name=ex]
+> python a.py
+Dave
+Mark
+Ann
+Phil
+\end{lstlisting}
+
+\pause
+\begin{lstlisting}[name=ex]
+# a.py
+c = { 'GOOG' : 490.10, 'IBM' : 91.50, 'AAPL' : 123.15 } 
+# Print out all of the members of a dictionary
+for key in c:
+  print key, c[key]
+\end{lstlisting}
+
+\pause
+\begin{lstlisting}[name=ex]
+> python a.py
+GOOG 490.1
+AAPL 123.15
+IBM 91.5
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Iteration and looping}
+
+\begin{lstlisting}[name=ex]
+# a.py
+for n in [0, 1,2,3,4,5,6,7,8,9]:
+  print("2 to the %d power is %d" % (n, 2**n))
+\end{lstlisting}
+
+\pause
+
+\begin{lstlisting}[name=ex]
+> python a.py
+2 to the 0 power is 1
+2 to the 1 power is 2
+2 to the 2 power is 4
+2 to the 3 power is 8
+2 to the 4 power is 16
+2 to the 5 power is 32
+2 to the 6 power is 64
+2 to the 7 power is 128
+2 to the 8 power is 256
+2 to the 9 power is 512
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{}
+
+\begin{lstlisting}[name=ex]
+# a.py
+for n in range(9):
+  print("2 to the %d power is %d" % (n, 2**n))
+\end{lstlisting}
+
+\pause
+
+\begin{lstlisting}[name=ex]
+> python a.py
+2 to the 0 power is 1
+2 to the 1 power is 2
+2 to the 2 power is 4
+2 to the 3 power is 8
+2 to the 4 power is 16
+2 to the 5 power is 32
+2 to the 6 power is 64
+2 to the 7 power is 128
+2 to the 8 power is 256
+2 to the 9 power is 512
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{{\tt range()} and {\tt xrange()}}
+
+\begin{itemize}
+\item For lengthy iterations, don't use {\tt range()} because it fully populates a list and takes up a lot of memory.
+\pause \item  Instead, use {\tt xrange()}, which gives you your iteration indices on a need-to-know basis.
+\end{itemize}
+
+\pause \begin{lstlisting}[name=ex]
+# a.py
+x = 0
+for n in xrange(999999999):
+  x = x + 1
+print(x)
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Generators}
+
+\begin{itemize}
+\item {\tt range()} is a special case of a larger class of functions called generators.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> def countdown(n):
+...   print "Counting down!" 
+...   while n > 0:
+...     yield n # Generate a value (n) 
+...     n -= 1
+... 
+>>> c = countdown(5)
+>>> c.next()
+Counting down!
+5
+>>> c.next()
+4
+>>> c.next()
+3
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{List comprehensions}
+
+\begin{lstlisting}[name=ex]
+>>> nums = [1, 2, 3, 4, 5]
+>>> squares = [n * n for n in nums]
+>>> squares
+[1, 4, 9, 16, 25]
+>>> a = [-3,5,2,-10,7,8]
+>>> b = 'abc'
+>>> [2*s for s in a]
+[-6, 10, 4, -20, 14, 16]
+>>> [s for s in a if s >= 0]
+[5, 2, 7, 8]
+>>> [(x,y) for x in a
+... for y in b if x > 0 ]
+[(5, 'a'), (5, 'b'), (5, 'c'), (2, 'a'), (2, 'b'), (2, 'c'), (7, 'a'), 
+(7, 'b'), (7, 'c'), (8, 'a'), (8, 'b'), (8, 'c')]
+>>> [(1,2), (3,4), (5,6)]
+[(1, 2), (3, 4), (5, 6)]
+\end{lstlisting}
+
+\pause
+\begin{itemize}
+\item General syntax:
+
+\begin{lstlisting}[name=ex]
+[expression for item_1 in iterable_1 if condition_1 
+            for item_2 in iterable_2 if condition_2
+            ...
+            for item_N in iterable_N if condition_N ]
+\end{lstlisting}
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Lambda functions, {\tt filter()}, {\tt map()}, and {\tt reduce()}}
+
+\begin{itemize}
+\item {\bf Lambda function}: a compact way of writing a function. You can think of a lambda function as a``function literal".
+\pause \item {\tt filter(fun, list)}: returns a list of all the elements e in list for which fun(e) is true.
+\pause \item {\tt map(fun, list)}: applies fun to each element of list and returns the result in a new list.
+\pause \item {\tt reduce(fun, list)}: equivalent to the following (length of list is n).
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+value = fun(list[0], list[1])
+value = fun(value, list[2])
+value = fun(value, list[3])
+...
+value = fun(value, list[n])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Lambda functions, {\tt filter()}, {\tt map()}, and {\tt reduce()}}
+
+\begin{lstlisting}[name=ex]
+>>> f = lambda x: x > 3 and x % 2 != 0
+>>> f(4)
+False
+>>> f(5)
+True
+>>> f(6)
+False
+>>> 
+>>> filter(lambda x: x > 3, [0, 1, 2, 3, 4, 5])
+[4, 5]
+>>>
+>>>
+>>> l = range(3)
+>>> map(str, l)
+['0', '1', '2']
+>>>
+>>> map(lambda x: x*x, l)
+[0, 1, 4]
+>>>
+>>> reduce(lambda x, y: x+y, range(1, 11)) # sum the numbers 1 to 10
+55
+>>>
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{File I/O}
+
+\begin{itemize}
+\item If I run:
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+# a.py
+import random
+
+f = open("data.txt", "w")
+f.write("x y\n")
+for i in xrange(10):
+  f.write("%0.3f %0.3f\n" % (random.random(), random.random()))
+\end{lstlisting}
+
+
+\pause
+
+
+\begin{itemize}
+\item The file, {\tt data.txt}, is generated:
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+x y
+0.506 0.570
+0.887 0.792
+0.921 0.641
+0.894 0.664
+0.494 1.000
+0.745 0.734
+0.274 0.127
+0.075 0.381
+0.449 0.995
+0.355 0.807
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{File I/O}
+
+\begin{itemize}
+\item I can read {\tt data.txt} with:
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> f = open("data.txt")
+>>> header = f.readline()
+>>> data = f.readlines()
+>>> 
+>>> header
+'x y\n'
+>>> data
+['0.506 0.570\n', '0.887 0.792\n', '0.921 0.641\n', '0.894 0.664\n', '0.494 1.000\n', 
+ '0.745 0.734\n', '0.274 0.127\n', '0.075 0.381\n', '0.449 0.995\n', '0.355 0.807\n']
+>>>
+>>> header = header.replace("\n","")
+>>> header
+'x y'
+>>>
+>>> d = [d.replace("\n","") for d in data]
+>>> d
+['0.506 0.570', '0.887 0.792', '0.921 0.641', '0.894 0.664', '0.494 1.000',
+ '0.745 0.734', '0.274 0.127', '0.075 0.381', '0.449 0.995', '0.355 0.807']
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{File I/O}
+
+\begin{itemize}
+\item And then I can process it into a nicer format.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> data = [d.split(" ") for d in data]
+>>> data
+[['0.506', '0.570'], ['0.887', '0.792'], ['0.921', '0.641'], ['0.894', '0.664'], 
+['0.494', '1.000'], ['0.745', '0.734'], ['0.274', '0.127'], ['0.075', '0.381'], 
+['0.449', '0.995'], ['0.355', '0.807']]
+>>> 
+>>> data = [map(float, d) for d in data]
+>>> data
+[[0.506, 0.57], [0.887, 0.792], [0.921, 0.641], [0.894, 0.664], [0.494, 1.0], 
+[0.745, 0.734], [0.274, 0.127], [0.075, 0.381], [0.449, 0.995], [0.355, 0.807]]
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Modules}
+
+\begin{itemize}
+\item Modules are Python libraries. You can use a library in your code with the {\tt import} command.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> sqrt(10)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'sqrt' is not defined
+>>> 
+>>> import math
+>>> sqrt(10)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'sqrt' is not defined
+>>> 
+>>> math.sqrt(10)
+3.1622776601683795
+>>> 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Modules}
+
+\begin{itemize}
+\item If you don't want to write {\tt math.sqrt()} every single time you want to compute a square root, you can use a shortcut.
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> import math as m
+>>> m.sqrt(10)
+3.1622776601683795
+>>> 
+\end{lstlisting}
+
+\pause
+
+\begin{itemize}
+\item Or better yet, 
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> from math import *
+>>> sqrt(10)
+3.1622776601683795
+>>> 
+\end{lstlisting}
+
+\pause
+
+\begin{itemize}
+\item Where is the math module?
+\end{itemize}
+
+\begin{lstlisting}[name=ex]
+>>> import math
+>>> math.__file__
+'/usr/lib64/python2.6/lib-dynload/mathmodule.so'
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Installing modules locally in impact1}
+
+\begin{itemize}\scriptsize
+\item We don't have permission to install modules ourselves in {\tt /usr/}. We have to either bother the STAT IT people or install our package locally.
+\pause \item Suppose I want to install the SQLAlchemy module. To download it into my home directory, I work from linux command line on impact1.
+\end{itemize}
+
+\lstset{language=bash}
+\pause \begin{lstlisting}[name=pkg]
+> cd ~
+> pwd
+/home/landau
+> ls
+stuff
+> wget http://prdownloads.sourceforge.net/sqlalchemy/SQLAlchemy-0.7.9.tar.gz?download
+# output of wget ...
+> ls
+stuff	SQLAlchemy-0.7.9.tar.gz
+> tar -zxvf SQLAlchemy-0.7.9.tar.gz 
+# output of tar...
+> cd SQLAlchemy-0.7.9
+> python setup.py build
+# output of python...
+> python setup.py install --user
+# output of python...
+Installed /home/landau/.local/lib/python2.6/site-packages/SQLAlchemy-0.7.9-py2.6-linux-x86_64.egg
+Processing dependencies for SQLAlchemy==0.7.9
+Finished processing dependencies for SQLAlchemy==0.7.9
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{Installing modules locally in impact1}
+
+\begin{itemize} \scriptsize
+\item IMPORTANT: take note that SQLAlchemy was installed in the directory, {\tt /home/landau/.local/lib/python2.6/site-packages/}. I must ``export" this path in my {\tt .bashrc} file so that Python knows where my new module lives. 
+\pause \item I move to my home directory and open {\tt .bashrc}:
+\end{itemize}
+
+\begin{lstlisting}[name=pkg]
+[landau@impact1 SQLAlchemy-0.7.9]$ cd ~
+[landau@impact1 ~]$ emacs .bashrc
+\end{lstlisting}
+
+
+\pause
+\begin{itemize}
+\item The file itself currently looks like this:
+\end{itemize}
+
+\begin{lstlisting}[name=bashrc]
+# .bashrc                                                                                                             
+
+# Source global definitions                                                                                           
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# User specific aliases and functions
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Installing modules locally in impact1}
+
+\begin{itemize}
+\item I add a couple lines to the end so that Python knows where to find my package:
+\end{itemize}
+
+\begin{lstlisting}[name=bashrc]
+# .bashrc                                                                                                             
+
+# Source global definitions                                                                                           
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# User specific aliases and functions                                                                                 
+
+export PYTHONPATH=$HOME/.local/lib/python2.6/site-packages:$PYTHONPATH
+export PATH=$HOME/.local/bin:$PATH
+\end{lstlisting}
+\pause
+
+\begin{itemize}
+\item Once I've made the changes and I log out and in so that the changes take effect, I'm ready to import SQLAlchemy.
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> import sqlalchemy
+>>>
+\end{lstlisting}
+
+\pause
+\begin{itemize}
+\item Remember to use all lower case letters for libraries in the {\tt import} statement.
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt sys} module}
+
+\begin{itemize}
+\item {\tt sys} is a module of system-specific parameters and functions.
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+# a.py
+import sys
+
+for arg in sys.argv:
+  print arg
+\end{lstlisting}
+
+\pause
+\begin{lstlisting}[name=ex2]
+> python a.py 1 2 3 4 5 3sir! 3!
+a.py
+1
+2
+3
+4
+5
+3sir!
+3!
+\end{lstlisting}
+\end{frame}
+
+
+\section{The NumPy module}
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{itemize}
+\item Important module for arrays and matrices. 
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> from numpy  import *
+>>> a = arange(15)
+>>> a
+array([ 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14])
+>>> a = a.reshape(3,5)
+>>> a
+array([[ 0,  1,  2,  3,  4],
+       [ 5,  6,  7,  8,  9],
+       [10, 11, 12, 13, 14]])
+>>> a.transpose()
+>>> a.transpose()
+array([[ 0,  5, 10],
+       [ 1,  6, 11],
+       [ 2,  7, 12],
+       [ 3,  8, 13],
+       [ 4,  9, 14]])
+>>> a.shape
+(3, 5)
+>>> a.size
+15
+>>> type(a)
+<type 'numpy.ndarray'>
+>>> 
+>>> zeros( (3,4) )
+array([[0.,  0.,  0.,  0.],
+       [0.,  0.,  0.,  0.],
+       [0.,  0.,  0.,  0.]])
+>>>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{lstlisting}[name=ex2]
+>>> ones( (2,3,4), dtype=int16 )                # dtype can also be specified
+array([[[ 1, 1, 1, 1],
+        [ 1, 1, 1, 1],
+        [ 1, 1, 1, 1]],
+       [[ 1, 1, 1, 1],
+        [ 1, 1, 1, 1],
+        [ 1, 1, 1, 1]]], dtype=int16)
+>>>
+>>> empty( (2,3) )
+array([[  3.73603959e-262,   6.02658058e-154,   6.55490914e-260],
+       [  5.30498948e-313,   3.14673309e-307,   1.00000000e+000]])
+>>>       
+>>> b = array( [ [1.5,2,3], [4,5,6] ] )
+>>> b
+array([[ 1.5,  2. ,  3. ],
+       [ 4. ,  5. ,  6. ]])
+>>> print(b)
+[[ 1.5  2.   3. ]
+ [ 4.   5.   6. ]]
+>>>
+>>> sum(b)
+21.5
+>>>
+>>> a = array( [20,30,40,50] )
+>>> b = arange( 4 )
+>>> b
+array([0, 1, 2, 3])
+>>> c = a-b
+>>> c
+array([20, 29, 38, 47])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{lstlisting}[name=ex2]
+>>> b**2
+array([0, 1, 4, 9])
+>>> 10*sin(a)
+array([ 9.12945251, -9.88031624,  7.4511316 , -2.62374854])
+>>> a<35
+array([True, True, False, False], dtype=bool)
+\end{lstlisting}
+
+\pause
+\begin{itemize}
+\item Elementwise product vs matrix product:
+\end{itemize}
+
+
+\begin{lstlisting}[name=ex2]
+>>> A = array( [[1,1],
+...             [0,1]] )
+>>> B = array( [[2,0],
+...             [3,4]] )
+>>> A*B                         # elementwise product
+array([[2, 0],
+       [0, 4]])
+>>> dot(A,B)                    # matrix product
+array([[5, 4],
+       [3, 4]])
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{itemize}
+\item Array indexing and slicing:
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> a
+array([[ 0,  1,  2,  3,  4],
+       [ 5,  6,  7,  8,  9],
+       [10, 11, 12, 13, 14]])
+>>> a[0]
+array([0, 1, 2, 3, 4])
+>>> a[1]
+array([5, 6, 7, 8, 9])
+>>> a[0:2]
+array([[0, 1, 2, 3, 4],
+       [5, 6, 7, 8, 9]])
+>>>
+>>> a[0, 0]
+0
+>>> a[1, 2]
+7
+>>> a[0:2, 0:2]
+array([[0, 1],
+       [5, 6]])
+>>> 
+>>> a[:,:]
+array([[ 0,  1,  2,  3,  4],
+       [ 5,  6,  7,  8,  9],
+       [10, 11, 12, 13, 14]])
+\end{lstlisting}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{lstlisting}[name=ex2]
+>>> a[:, 0]
+array([ 0,  5, 10])
+>>> a[:, 0:1]
+array([[ 0],
+       [ 5],
+       [10]])
+>>> 
+\end{lstlisting}
+
+\pause
+\begin{itemize}
+\item Iterating over an array:
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> for row in a:
+...   print row
+... 
+[0 1 2 3 4]
+[5 6 7 8 9]
+[10 11 12 13 14]
+>>> 
+>>> for index in xrange(a.shape[1]):
+...   print a[:, index]
+... 
+[ 0  5 10]
+[ 1  6 11]
+[ 2  7 12]
+[ 3  8 13]
+[ 4  9 14]
+>>> 
+>>> for elt in a.flat:
+...   print elt,
+... 
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{itemize}
+\item Array stacking:
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> a = floor(10*random.random((2,2)))
+>>> a
+array([[ 1.,  1.],
+       [ 5.,  8.]])
+>>> b = floor(10*random.random((2,2)))
+>>> b
+array([[ 3.,  3.],
+       [ 6.,  0.]])
+>>> vstack((a,b))
+array([[ 1.,  1.],
+       [ 5.,  8.],
+       [ 3.,  3.],
+       [ 6.,  0.]])
+>>> hstack((a,b))
+array([[ 1.,  1.,  3.,  3.],
+       [ 5.,  8.,  6.,  0.]])
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{itemize}
+\item Shallow copying:
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> c = a.view()
+>>> c == a
+array([[ True,  True,  True,  True,  True],
+       [ True,  True,  True,  True,  True],
+       [ True,  True,  True,  True,  True]], dtype=bool)
+>>> c is a
+False
+>>> a[0,0] = 1000
+>>> a
+array([[1000,    1,    2,    3,    4],
+       [   5,    6,    7,    8,    9],
+       [  10,   11,   12,   13,   14]])
+>>> c
+array([[1000,    1,    2,    3,    4],
+       [   5,    6,    7,    8,    9],
+       [  10,   11,   12,   13,   14]])
+>>> 
+\end{lstlisting}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+\scriptsize
+\begin{itemize}
+\item The default copy is the shallow copy:
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> a
+array([[1000,    1,    2,    3,    4],
+       [   5,    6,    7,    8,    9],
+       [  10,   11,   12,   13,   14]])
+>>> b = a
+>>> a[0,0] = 0
+>>> b
+array([[ 0,  1,  2,  3,  4],
+       [ 5,  6,  7,  8,  9],
+       [10, 11, 12, 13, 14]])
+\end{lstlisting}
+
+\pause
+\begin{itemize}
+\item Deep copying:
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> a
+array([[ 0,  1,  2,  3,  4],
+       [ 5,  6,  7,  8,  9],
+       [10, 11, 12, 13, 14]])
+>>> b = a.copy()
+>>> b[0,0] = 1000
+>>> a
+array([[ 0,  1,  2,  3,  4],
+       [ 5,  6,  7,  8,  9],
+       [10, 11, 12, 13, 14]])
+>>> b
+array([[1000,    1,    2,    3,    4],
+       [   5,    6,    7,    8,    9],
+       [  10,   11,   12,   13,   14]])
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+\begin{itemize}
+\item Logical arrays:
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> a = arange(12).reshape(3,4)
+>>> b = a > 4
+>>> b                                          # b is a boolean with a's shape
+array([[False, False, False, False],
+       [False, True, True, True],
+       [True, True, True, True]], dtype=bool)
+>>> a[b]                                       # 1d array with the selected elements
+array([ 5,  6,  7,  8,  9, 10, 11])
+>>>
+>>> a[b] = 0                                   # All elements of 'a' higher than 4 become 0
+>>> a
+array([[0, 1, 2, 3],
+       [4, 0, 0, 0],
+       [0, 0, 0, 0]])
+\end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{itemize}
+\item Simple linear algebra:
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> from numpy import *
+>>> from numpy.linalg import *
+
+>>> a = array([[1.0, 2.0], [3.0, 4.0]])
+>>> print a
+[[ 1.  2.]
+ [ 3.  4.]]
+
+>>> a.transpose()
+array([[ 1.,  3.],
+       [ 2.,  4.]])
+
+>>> inv(a)
+array([[-2. ,  1. ],
+       [ 1.5, -0.5]])
+
+>>> u = eye(2) # unit 2x2 matrix; "eye" represents "I"
+>>> u
+array([[ 1.,  0.],
+       [ 0.,  1.]])
+>>> j = array([[0.0, -1.0], [1.0, 0.0]])
+
+>>> dot (j, j) # matrix product
+array([[-1.,  0.],
+       [ 0., -1.]])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{lstlisting}[name=ex2]
+>>> trace(u)  # trace
+2.0
+
+>>> y = array([[5.], [7.]])
+>>> solve(a, y)
+array([[-3.],
+       [ 4.]])
+
+>>> eig(j)
+(array([ 0.+1.j,  0.-1.j]),
+array([[ 0.70710678+0.j,  0.70710678+0.j],
+       [ 0.00000000-0.70710678j,  0.00000000+0.70710678j]]))
+Parameters:
+    square matrix
+
+Returns
+    The eigenvalues, each repeated according to its multiplicity.
+
+    The normalized (unit "length") eigenvectors, such that the
+    column ``v[:,i]`` is the eigenvector corresponding to the
+    eigenvalue ``w[i]`` .
+\end{lstlisting}
+\end{frame}
+
+
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{itemize}
+\item Matrices:
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> A = matrix('1.0 2.0; 3.0 4.0')
+>>> A
+[[ 1.  2.]
+ [ 3.  4.]]
+>>> type(A)  # file where class is defined
+<class 'numpy.matrixlib.defmatrix.matrix'>
+
+>>> A.T  # transpose
+[[ 1.  3.]
+ [ 2.  4.]]
+
+>>> X = matrix('5.0 7.0')
+>>> Y = X.T
+>>> Y
+[[5.]
+ [7.]]
+
+>>> print A*Y  # matrix multiplication
+[[19.]
+ [43.]]
+
+>>> print A.I  # inverse
+[[-2.   1. ]
+ [ 1.5 -0.5]]
+
+>>> solve(A, Y)  # solving linear equation
+matrix([[-3.],
+        [ 4.]])
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{The {\tt NumPy} module}
+
+\begin{itemize}
+\item Caution: indexing and slicing are different between matrices and arrays.
+\end{itemize}
+
+\begin{lstlisting}[name=ex2]
+>>> A = arange(12).reshape(3,4)
+>>> M =  mat(A.copy())
+>>> 
+>>> print A[:,1]
+[1 5 9]
+>>> print M[:,1]
+[[1]
+ [5]
+ [9]]
+>>>
+\end{lstlisting}
+\end{frame}
+
+
+
+\section{Other useful modules}
+\begin{frame}
+\frametitle{Other useful modules}
+\scriptsize
+\begin{itemize}
+\item {\tt SciPy}: a module for scientific computing
+
+\begin{center}
+\begin{tabular}{l|l}
+submodule & contents \\ \hline
+{\tt cluster} & clustering algorithms \\
+{\tt constants} & physical and mathematical constants \\
+{\tt fftpack} & fast Fourier transform \\
+{\tt integrate} & integration and ordinary differential equation solvers \\
+{\tt interpolate} & interpolation and smoothing splines \\
+{\tt io} & input and output \\
+{\tt linalg} & linear algebra \\
+{\tt ndimage} & N-dimensional image processing \\
+{\tt odr} & orthogonal distance regression \\
+{\tt optimize} & optimization and root-finding routines \\
+{\tt signal} & signal processing \\
+{\tt sparse} & sparse matrix routines \\
+{\tt spatial}	 & spatial data structures and algorithms \\
+{\tt special} & ``special" functions \\
+{\tt stats} & statistical distributions and functions \\
+{\tt weave} & integration with C/C++
+\end{tabular}
+\end{center}
+
+\pause \item {\tt matplotlib}: graphics and plotting
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Other useful modules}
+\begin{itemize}
+\item {\tt PyCUDA}: writing and executing GPU kernels from within Python.
+\begin{itemize}
+\pause \item Stay tuned $\ldots$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Outline}
+\tableofcontents
+\end{frame}
+
+\begin{frame}
+\frametitle{Resources} \small
+
+\begin{itemize}
+\item Guides:
+\begin{enumerate}
+\item David M. Beazley. \emph{Python Essential Reference: Fourth Edition}. Addison-Wesley, 2009.
+\pause \item Tentative NumPy Tutorial. \url{http://www.scipy.org/Tentative\_NumPy\_Tutorial}.
+\pause \item SciPy Tutorial. \url{http://docs.scipy.org/doc/scipy/reference/tutorial/general.html}
+\item Matplotlib. \url{http://matplotlib.org/}.
+\end{enumerate}
+\pause \item Code from today:
+\begin{itemize}
+\item \href{http://will-landau.com/gpu/Code/Python/Basic_Python/IntroPython.py}{IntroPython.py}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{That's all for today.}
+\begin{itemize}
+\item Series materials are available at \url{http://will-landau.com/gpu}.
+\end{itemize}
+\end{frame}
+
+
+
+\end{document}

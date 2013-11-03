@@ -1,0 +1,152 @@
+---
+layout: default
+current: "talks"
+title: "The PyCUDA module"
+root: "/gpu/"
+---
+
+<h2>The PyCUDA module</h2>
+
+Day: Monday, December 2<br/>
+Time: 2:10 PM - 3:00 PM<br/>
+Place: <a href="http://www.fpm.iastate.edu/maps/buildings/building.asp?id=119">Snedecor Hall 2113</a><br/><br/>
+
+PyCUDA is a GPU-enabled Python module that weaves 
+Python with CUDA C. PyCUDA allows the user to build 
+and execute GPU kernels within Python, and it encapsulates 
+the transfer of Python data objects to and from the GPU. 
+Hence, PyCUDA allows the user to take advantage of both 
+the computing power of CUDA C and the convenience and 
+ease of Python. This talk will introduce PyCUDA with 
+several example scripts and conclude with a brief overview 
+of ABC-SysBio, a GPU-accelerated approximate Bayesian 
+computation untility for estimating parameters in 
+dynamical systems.
+<br/><br/>
+
+<h2>Materials</h2>
+
+<a href="lectures/pycuda/pycuda.pdf" target="_blank">Slides</a><br/>
+<a href="video/pycuda.html" target="_blank">Video</a><br/><br/>
+
+<h2>Python Code</h2>
+  <a href="Code/Python/PyCUDA/demo.py">demo.py</a><br/>
+  <a href="Code/Python/PyCUDA/demohandler.py">demohandler.py</a><br/>
+  <a href="Code/Python/PyCUDA/DemoMetaCodepy.py">DemoMetaCodepy.py</a><br/>
+  <a href="Code/Python/PyCUDA/demoshort.py">demoshort.py</a><br/>
+  <a href="Code/Python/PyCUDA/DumpProperties.py">DumpProperties.py</a><br/>
+  <a href="Code/Python/PyCUDA/functiontemplates.py">functiontemplates.py</a><br/>
+  <a href="Code/Python/PyCUDA/hello_gpu.py">hello_gpu.py</a><br/>
+  <a href="Code/Python/PyCUDA/MatmulSimple.py">MatmulSimple.py</a><br/>
+  <a href="Code/Python/PyCUDA/MeasureGpuarraySpeedRandom.py">MeasureGpuarraySpeedRandom.py</a><br/>
+  <a href="Code/Python/PyCUDA/pycurand.py">pycurand.py</a><br/>
+  <a href="Code/Python/PyCUDA/reduction.py">reduction.py</a><br/>
+  <a href="Code/Python/PyCUDA/scan.py">scan.py</a>
+<br/><br/>
+
+<h2>ABC-SysBio Examples</h2>
+
+<div class="indent">
+<div class="colwid3">
+<h3>Example 1</h3>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/data.txt">
+data.txt</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/input_file_SIR_auto.xml">
+input_file_SIR_auto.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/input_file_SIR_normk.xml">
+input_file_SIR_normk.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/input_file_SIR_simulation.xml">
+input_file_SIR_simulation.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/input_file_SIR_x0_normk.xml">
+input_file_SIR_x0_normk.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/input_file_SIR_x0.xml">
+input_file_SIR_x0.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/input_file_SIR.xml">
+input_file_SIR.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/SIRModel1.xml">
+SIRModel1.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/SIRModel2.xml">
+SIRModel2.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example1/SIRModel3.xml">
+SIRModel3.xml</a><br/><br/>
+
+<h3>Example 3</h3>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example3/DimerisationDiscreetStochastic.xml">
+DimerisationDiscreetStochastic.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example3/input_file_dimerisation_auto.xml">
+input_file_dimerisation_auto.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example3/input_file_dimerisation.xml">
+input_file_dimerisation.xml</a><br/><br/><br/><br/>
+
+<h3>Example 5</h3>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example5/input_file_repressilator_auto.xml">
+input_file_repressilator_auto.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example5/input_file_repressilator.xml">
+input_file_repressilator.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example5/repressilator.xml">
+repressilator.xml</a>
+</div>
+
+<div class="colwid3">
+<h3>Example 2</h3>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example2/input_file_lingrow_normk.xml">
+input_file_lingrow_normk.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example2/input_file_lingrow_normk2.xml">
+input_file_lingrow_normk2.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example2/input_file_lingrow_restart.xml.xml">
+input_file_lingrow_restart.xml.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example2/input_file_lingrow_simulation.xml">
+input_file_lingrow_simulation.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example2/input_file_lingrow_x0_restart.xml">
+input_file_lingrow_x0_restart.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example2/input_file_lingrow_x0.xml">
+input_file_lingrow_x0.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example2/input_file_lingrow.xml">
+input_file_lingrow.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example2/LinearGrowthModelModified.py">
+LinearGrowthModelModified.py</a><br/><br/><br/><br/>
+
+<h3>Example 4</h3>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example4/immigration-death.xml">
+immigration-death.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example4/input_file_pop_mjp.xml">
+input_file_pop_mjp.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example4/input_file_pop_ode.xml">
+input_file_pop_ode.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example4/input_file_pop_sde.xml">
+input_file_pop_sde.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example4/logistic.xml">
+logistic.xml</a><br/><br/>
+
+<h3>Example 6</h3>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/customABC.py">
+customABC.py</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/input_file_adaptation.xml">
+input_file_adaptation.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model1.xml">
+three_nodes_model1.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model2.xml">
+three_nodes_model2.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model3.xml">
+three_nodes_model3.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model4.xml">
+three_nodes_model4.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model5.xml">
+three_nodes_model5.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model6.xml">
+three_nodes_model6.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model7.xml">
+three_nodes_model7.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model8.xml">
+three_nodes_model8.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model9.xml">
+three_nodes_model9.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model10.xml">
+three_nodes_model10.xml</a><br/>
+<a href="https://github.com/wlandau/gpu/tree/master/Code/Python/ABC-SysBio/Example6/three_nodes_model11.xml">
+three_nodes_model11.xml</a>
+</div></div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+<br/><br/>

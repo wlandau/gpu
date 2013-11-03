@@ -1,0 +1,38 @@
+---
+layout: default
+current: "talks"
+title: "CUDA C: race conditions atomics"
+root: "/gpu/"
+---
+
+<h2>CUDA C: race conditions and atomics</h2>
+
+Day: Monday, October 21<br/>
+Time: 2:10 PM - 3:00 PM<br/>
+Place: <a href="http://www.fpm.iastate.edu/maps/buildings/building.asp?id=119">Snedecor Hall 2113</a><br/><br/>
+
+
+This lecture will explore what happens when a CUDA C
+user must launch several threads that compete to access the same data, 
+violating the Single Instruction Multiple Data (SIMD) paradigm. Elusive defects 
+called race conditions occur unless the programmer uses atomic operations 
+to force certain instruction sets to be executed sequentially. 
+<br/><br/>
+
+<h2>Materials</h2>
+<a href="lectures/cudac-atomics/cudac-atomics.pdf" target="_blank">Slides</a><br/>
+<a href="video/cudac-atomics.html" target="_blank">Video</a><br/><br/>
+
+<h2>Example Code</h2>
+<div class="colwid2">
+  <a href="Code/CUDA_C/dot_product_atomic_builtin/dot_product_atomic_builtin.cu">dot_product_atomic_builtin.cu</a><br/>
+  <a href="Code/CUDA_C/dot_product_atomic_lock/dot_product_atomic_lock.cu">dot_product_atomic_lock.cu</a><br/>
+  <a href="Code/CUDA_C/race_condition/race_condition.cu">race_condition.cu</a><br/>
+  <a href="Code/CUDA_C/race_condition_fixed/race_condition_fixed.cu">race_condition_fixed.cu</a><br/>
+  <a href="Code/CUDA_C/blockCounter/blockCounter.cu">blockCounter.cu</a>
+</div>
+  <a href="Code/CUDA_C/dot_product_atomic_builtin/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/dot_product_atomic_lock/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/race_condition/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/race_condition_fixed/Makefile">Makefile</a><br/>
+  <a href="Code/CUDA_C/blockCounter/Makefile">Makefile</a><br/>

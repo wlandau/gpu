@@ -1,0 +1,85 @@
+<input>
+# Number of models for which details are described in this input file
+<modelnumber> 1 </modelnumber>
+
+# Restart from previous (pickled) population?
+<restart> False </restart>
+
+# Series of epsilons. (Whitespace delimited list)
+# If the length of the epsilon series is one and you have only one model
+# you are effectively doing abc Rejection
+<epsilon>
+ <e1> 100 </e1>
+</epsilon>
+
+# Population size
+<particles> 100 </particles>
+
+# Beta is the number of times to simulate each sampled parameter set.
+# This is only applicable for models simulated using SDE.
+
+<beta> 1 </beta>
+
+# Internal timestep for solver.
+# Make this small for a stiff model.
+
+<dt> 0.01 </dt>
+
+# User-supplied data.
+
+<data>
+# times: For abc-SMC, times must be a whitespace delimited list starting with 0.
+# For simulation only the first and last timepoints are used.
+# To make a synthetic data set give a whitespace delimited list of timepoints at which data points are required.
+
+<times> 0 1 2 3 4 5 6 7 8 9 10 </times>
+
+# variables: For abc-SMC, whitespace delimited lists of concentrations (ODE or SDE) or molecule numbers (Gillespie).
+# Denote your data as variable1, variable2, ..., variableN.
+# For simulation or synthetic data sets these data are ignored.
+# See fitting instruction below if the dimensionality of your data sets differ from the dimensionality of your model.
+
+<variables>
+ <v1> 301 223 189 161 139 133 127 135 153 155 149 </v1>
+ <v2> 0 39 56 70 81 84 87 83 74 73 76 </v2>
+</variables>
+</data>
+
+<models>
+<model1>
+<name> DimerisationDiscreetStochastic </name>
+<source> DimerisationDiscreetStochastic.xml </source>
+
+# type: the method used to simulate your model. ODE, SDE or Gillespie.
+
+<type> Gillespie </type>
+
+# Fitting information. If fit is None, all species in the model are fitted to the data in the order they are listed in the model.
+# Otherwise, give a whitespace delimited list of fitting instrictions the same length as the dimensions of your data.
+# Use speciesN to denote the Nth species in your model. Simple arithmatic operations can be performed on the species from your model.
+# For example, to fit the sum of the first two species in your model to your first variable, write fit: species1+species2
+
+<fit> None </fit>
+
+# Priors:
+# one of 
+#	constant, value
+#       normal, mean, variance
+#	uniform, lower, upper
+#	lognormal, mean, variance
+
+<parameters>
+<parameter1> constant 1.0   </parameter1>
+<parameter2> uniform 0 0.05 </parameter2>
+<parameter3> uniform 0 0.5  </parameter3>
+</parameters>
+
+<initial>
+<ic1> constant 301.0 </ic1>
+<ic2> constant 0.0 </ic2>
+</initial>
+
+</model1>
+</models>
+</input>
+

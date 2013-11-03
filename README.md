@@ -1,0 +1,1 @@
+This repository contains the materials for the Iowa State Statsitics Department's fall 2013 GPU Computing lecture series.

@@ -1,0 +1,148 @@
+<input>
+
+######################## number of models
+
+# Number of models for which details are described in this input file
+<modelnumber> 2 </modelnumber>
+
+######################## restart
+
+# Restart from previous (pickled) population?
+<restart> False </restart>
+
+######################## epsilon schedule
+
+# Automatic epsilon schedule. Provide a vector of final epsilons and the alpha (defaults to 0.9)
+<!-- <autoepsilon> -->
+<!-- <finalepsilon> 1.0 </finalepsilon> -->
+<!-- <alpha> 0.9 </alpha> -->
+<!-- </autoepsilon> -->
+
+# OR
+# Series of epsilons. (Whitespace delimited list)
+# Multiple epsilon schedules can be specified by giving additional vectors enclosed in <e2> </e2>, <e3> </e3> etc
+# NOTE: the parser always reads them in order and ignores the tag value
+<epsilon>
+ <e1> 20.0 15.0 12.0 </e1>
+</epsilon>
+
+######################## particles
+
+<particles> 100 </particles>
+
+######################## beta
+
+# Beta is the number of times to simulate each sampled parameter set.
+# This is only applicable for models simulated using Gillespie and SDE
+<beta> 3 </beta>
+
+######################## dt
+
+# Internal timestep for solver.
+# Make this small for a stiff model.
+<dt> 0.01 </dt>
+
+######################## perturbation kernels : OPTIONAL (default uniform)
+
+# The pertubation kernels are computed with respect to the previous parameter distribution
+# Currently uniform and normal are implemented
+<kernel> uniform </kernel>
+
+######################## model kernel : OPTIONAL (default 0.7)
+
+# Probability of perturbing the sampled model (ignored when modelnumber = 1)
+<modelkernel> 0.7 </modelkernel>
+
+######################## ODE solver control : OPTIONAL 
+
+# rtol and atol can be specified here. If the model is stiff then setting these to small might help the simulation to run
+#<rtol> </rtol> 
+#<atol> </atol>
+
+######################## User-supplied data
+
+<data>
+# times: For ABC SMC, times must be a whitespace delimited list
+# In simulation mode these are the timepoints for which the simulations will be output
+<times> 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 </times>
+
+# variables: For ABC SMC, whitespace delimited lists of concentrations (ODE or SDE) or molecule numbers (Gillespie)
+# Denote your data via tags <v1> </v1> or <var1> </var1> or <v2> </v2> etc. The tags are ignored and the data read in order
+# For simulation these data are ignored
+# See fitting instruction below if the dimensionality of your data sets differ from the dimensionality of your model
+<variables>
+ <var1> 1 2 2 4 5 5 6 8 8 8 10 10 11 11 12 11 12 15 15 12 13 12 12 11 13 12 10 8 7 7 8 </var1>
+</variables>
+</data>
+
+######################## Models
+
+<models>
+<model1>
+<name> immigration-death </name>
+<source> immigration-death.xml </source>
+
+# type: the method used to simulate your model. ODE, SDE or Gillespie.
+<type> Gillespie </type>
+
+# Fitting information. If fit is None, all species in the model are fitted to the data in the order they are listed in the model.
+# Otherwise, give a whitespace delimited list of fitting instrictions the same length as the dimensions of your data.
+# Use speciesN to denote the Nth species in your model. Simple arithmetic operations can be performed on the species from your model.
+# For example, to fit the sum of the first two species in your model to your first variable, write fit: species1+species2
+<fit> None </fit>
+
+# Priors on initial conditions and parameters:
+# one of 
+#       constant, value 
+#       normal, mean, variance 
+#       uniform, lower, upper 
+#       lognormal, mean, variance 
+
+<initial>
+ <ic1> constant 1.0 </ic1>
+</initial>
+
+<parameters>
+<parameter1> constant 1.0     </parameter1>
+<parameter2> uniform 0.1 10.0 </parameter2>
+<parameter3> uniform 0.01 1.0 </parameter3>
+</parameters>
+</model1>
+
+<model2>
+<name> logistic </name>
+<source> logistic.xml </source>
+
+# type: the method used to simulate your model. ODE, SDE or Gillespie.
+<type> Gillespie </type>
+
+# Fitting information. If fit is None, all species in the model are fitted to the data in the order they are listed in the model.
+# Otherwise, give a whitespace delimited list of fitting instrictions the same length as the dimensions of your data.
+# Use speciesN to denote the Nth species in your model. Simple arithmetic operations can be performed on the species from your model.
+# For example, to fit the sum of the first two species in your model to your first variable, write fit: species1+species2
+<fit> species1 </fit>
+
+# Priors on initial conditions and parameters:
+# one of 
+#       constant, value 
+#       normal, mean, variance 
+#       uniform, lower, upper 
+#       lognormal, mean, variance 
+
+<initial>
+ <ic1> constant 1.0 </ic1>
+ <ic2> constant 1.0 </ic2>
+</initial>
+
+<parameters>
+<parameter1> constant 1.0      </parameter1>
+<parameter2> uniform 0.1  10.0 </parameter2>
+<parameter3> uniform 0.01 1.0  </parameter3>
+<parameter4> uniform 0.01 2.0  </parameter4>
+</parameters>
+</model2>
+
+</models>
+
+</input>
+

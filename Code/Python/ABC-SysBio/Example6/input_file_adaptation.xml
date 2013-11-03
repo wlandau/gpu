@@ -1,0 +1,442 @@
+<input>
+
+<modelnumber> 11 </modelnumber>
+
+<restart> False </restart>
+
+<autoepsilon>
+<finalepsilon> 0.1 1.0 </finalepsilon>
+<alpha> 0.9 </alpha>
+</autoepsilon>
+
+<particles> 1000 </particles>
+
+<beta> 1 </beta>
+
+<dt> 0.1 </dt>
+
+<kernel> uniform </kernel>
+
+<modelkernel> 0.7 </modelkernel>
+
+<data>
+<times> 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 160 161 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194 195 196 197 198 199 200 </times>
+<variables>
+ <var1> 0 </var1>
+</variables>
+
+</data>
+
+######################## Models
+
+<models>
+
+<model1>
+<name> model1 </name>
+<source> three_nodes_model1.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+</parameters>
+</model1>
+
+<model2>
+<name> model2 </name>
+<source> three_nodes_model2.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+ <ic10> constant 0.5 </ic10>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+<parameter14> uniform -1 1 </parameter14>
+<parameter15> uniform -3 2 </parameter15>
+</parameters>
+</model2>
+
+<model3>
+<name> model3 </name>
+<source> three_nodes_model3.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+</parameters>
+</model3>
+
+<model4>
+<name> model4 </name>
+<source> three_nodes_model4.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+</parameters>
+</model4>
+
+<model5>
+<name> model5 </name>
+<source> three_nodes_model5.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+</parameters>
+</model5>
+
+<model6>
+<name> model6 </name>
+<source> three_nodes_model6.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+</parameters>
+</model6>
+
+<model7>
+<name> model7 </name>
+<source> three_nodes_model7.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+ <ic10> constant 0.5 </ic10>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+<parameter14> uniform -1 1 </parameter14>
+<parameter15> uniform -3 2 </parameter15>
+</parameters>
+</model7>
+
+<model8>
+<name> model8 </name>
+<source> three_nodes_model8.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+ <ic10> constant 0.5 </ic10>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+<parameter14> uniform -1 1 </parameter14>
+<parameter15> uniform -3 2 </parameter15>
+</parameters>
+</model8>
+
+<model9>
+<name> model9 </name>
+<source> three_nodes_model9.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+</parameters>
+</model9>
+
+<model10>
+<name> model10 </name>
+<source> three_nodes_model10.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+</parameters>
+</model10>
+
+<model11>
+<name> model11 </name>
+<source> three_nodes_model11.xml </source>
+<type> ODE </type>
+<fit> species6 </fit>
+<logp> True </logp>
+
+<initial>
+ <ic1> constant 0.5 </ic1>
+ <ic2> constant 0.0 </ic2>
+ <ic3> constant 1.0 </ic3>
+ <ic4> constant 0.0 </ic4>
+ <ic5> constant 1.0 </ic5>
+ <ic6> constant 0.0 </ic6>
+ <ic7> constant 1.0 </ic7>
+ <ic8> constant 0.5 </ic8>
+ <ic9> constant 0.5 </ic9>
+</initial>
+
+<parameters>
+<parameter1> constant 0.0 </parameter1>
+<parameter2> uniform -1 1 </parameter2>
+<parameter3> uniform -3 2 </parameter3>
+<parameter4> uniform -1 1 </parameter4>
+<parameter5> uniform -3 2 </parameter5>
+<parameter6> uniform -1 1 </parameter6>
+<parameter7> uniform -3 2 </parameter7>
+<parameter8> uniform -1 1 </parameter8>
+<parameter9> uniform -3 2 </parameter9>
+<parameter10> uniform -1 1 </parameter10>
+<parameter11> uniform -3 2 </parameter11>
+<parameter12> uniform -1 1 </parameter12>
+<parameter13> uniform -3 2 </parameter13>
+</parameters>
+</model11>
+
+</models>
+
+</input>
+
