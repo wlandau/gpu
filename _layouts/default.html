@@ -14,29 +14,6 @@
     <script src="http://bibtex-js.googlecode.com/svn/trunk/src/bibtex_js.js"></script>
   {% endif %}
   
-  <script>
-    $(window).load(function(){
-     /* $("<div style=\"clear:both;\"></div>").insertAfter("h1");
-      $("<div style=\"clear:both;\"></div>").insertAfter("h2");
-      $("<div style=\"clear:both;\"></div>").insertAfter("h3");
-      $("<div style=\"clear:both;\"></div>").insertAfter("h4"); */
-      
-      if($('#disqus_thread').length == 0)
-        $('#main-content').outerHeight(Math.max(
-          $(window).outerHeight() - $('#navbar').outerHeight() - $('#footer').outerHeight(),
-          $('#main-content').outerHeight() 
-        ));
-    });
-    
-    window.onresize = function(){
-      if($('#disqus_thread').length == 0)
-        $('#main-content').height(Math.max(
-          $(window).outerHeight() - $('#navbar').outerHeight() - $('#footer').outerHeight(),
-          $('#main-content').outerHeight()
-        ));
-    };
-  </script>
-  
   <title>{{page.title}} - Will Landau - Iowa State University</title>
 </head>
 
