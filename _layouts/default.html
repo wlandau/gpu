@@ -30,7 +30,7 @@
     
     window.onresize = function(){
       if($('#disqus_thread').length == 0)
-        $('#main').height(Math.max(
+        $('#main-content').height(Math.max(
           $(window).outerHeight() - $('#navbar').outerHeight() - $('#footer').outerHeight(),
           $('#main-content').outerHeight()
         ));
