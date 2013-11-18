@@ -98,7 +98,7 @@
 \frametitle{Preliminaries}
 \begin{itemize}
 \item Python is a high-level multipurpose interpreted language. 
-\pause \item It's clumsier than R at number crunching, and better than R at string manipulation.
+\pause \item It's clumsier than R at statistical number crunching, but better than R at string manipulation.
 \pause \item Open the interpreter by typing {\tt python} into the command line.
 \begin{lstlisting}[name=ex]
 > python
@@ -969,7 +969,7 @@ x y
 \frametitle{Modules}
 
 \begin{itemize}
-\item Modules are Python libraries. You can use a library in your code with the {\tt import} command.
+\item Modules are external packages of code. The are not usually builtin, but  they can be imported. 
 \end{itemize}
 
 \begin{lstlisting}[name=ex]
@@ -1473,7 +1473,7 @@ array([[1000,    1,    2,    3,    4],
 \begin{lstlisting}[name=ex2]
 >>> a = arange(12).reshape(3,4)
 >>> b = a > 4
->>> b                                          # b is a boolean with a's shape
+>>> b              # b is a boolean with the same shape as a
 array([[False, False, False, False],
        [False, True, True, True],
        [True, True, True, True]], dtype=bool)
