@@ -154,7 +154,7 @@
 \pause \item {\tt CURAND\_RNG\_QUASI\_SOBOL32}: Sobol, 32-bit sequences
  \item {\tt CURAND\_RNG\_QUASI\_SOBOL64}: Sobol, 64-bit sequences
 \pause \item {\tt CURAND\_RNG\_QUASI\_SCRAMBLED\_SOBOL32}: scrambled Sobol, 32-bit sequences
- \item {\tt CURAND\_RNG\_QUASI\_SCRAMBLED\_SOBOL64}: scrambled Sobol, 62-bit sequences
+ \item {\tt CURAND\_RNG\_QUASI\_SCRAMBLED\_SOBOL64}: scrambled Sobol, 64-bit sequences
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -163,7 +163,7 @@
 \frametitle{Generator options}
 \begin{itemize}
 \item {\bf Seed}: a 64-bit integer that initializes the starting state of a pseudorandom number generator.
-\pause \item {\bf Offset}: a parameter used sot skip ahead in the sequence. Set offset = 100 to return the 100th number in the sequence first. Not available for the Mersenne Twister.
+\pause \item {\bf Offset}: a parameter used to skip ahead in the sequence. Set offset = 100 to return the 100th number in the sequence first. Not available for the Mersenne Twister.
 \pause \item {\bf Order}: a parameter specifying how results are ordered in global memory.
 \end{itemize}
 \end{frame}
