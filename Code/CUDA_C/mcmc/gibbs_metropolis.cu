@@ -49,6 +49,8 @@ specifically http://docs.nvidia.com/cuda/curand/index.html#topic_1_2_1
 #include <math.h>
 #include <curand_kernel.h>
 #include <thrust/reduce.h>
+#include <thrust/device_ptr.h>
+#include <thrust/device_vector.h>
 
 #define PI 3.14159265359f
 #define THREADS_PER_BLOCK 64
